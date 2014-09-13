@@ -17,7 +17,7 @@
             <tizen.doc>
                 <tizen.page id="help" data-dom-cache="false" data-title="">
                     <tizen.header id="header1" text="Help" text2="" data-position="fixed" icon-id="" src="">
-                        <tizen.headerbutton id="backButton" text="Back" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide"/>
+                        <tizen.headerbutton id="backButton" text="Back" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide" ontap="backButton_ontap"/>
                     </tizen.header>
                     <tizen.content id="content1" data-handler="false"/>
                 </tizen.page>

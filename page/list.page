@@ -17,13 +17,13 @@
                 <tizen.selector name="#header1 h1" partId="header1"/>
             </tizen.css>
             <tizen.doc>
-                <tizen.page id="list" data-dom-cache="false" data-title="">
+                <tizen.page id="list" data-dom-cache="false" data-title="" onpagebeforeshow="onpagebeforeshow">
                     <tizen.header id="header1" text="Sound List" text2="" data-position="fixed" icon-id="" src="">
                         <tizen.headerbutton id="newSoundButton" text="+" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide" ontap="newSoundButton_ontap"/>
-                        <tizen.headerbutton id="settingsButton" text="*" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide"/>
+                        <tizen.headerbutton id="settingsButton" text="*" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide" ontap="settingsButton_ontap"/>
                     </tizen.header>
                     <tizen.content id="content1" data-handler="false">
-                        <tizen.list id="soudList" data-autodividers="false" data-fastscroll="false"/>
+                        <tizen.list id="soundListView" data-autodividers="false" data-fastscroll="false"/>
                         <tizen.button id="startButton" text="Start" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="startButton_ontap"/>
                     </tizen.content>
                 </tizen.page>

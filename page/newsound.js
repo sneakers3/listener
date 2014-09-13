@@ -10,6 +10,9 @@
 */
 _newsound_page.prototype.okButton_ontap = function(event) {
 	console.log('ok button tap');
+	console.log('sound title:' + this.soundTitle.val());
+	addNewSound(this.soundTitle.val(), '');
+	pageManager.changePage('list', {});
 };
 
 /**

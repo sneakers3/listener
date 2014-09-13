@@ -3,6 +3,15 @@
 * User should hand edit this file.
 ********************************************************************************/
 
+function updateSoundList(soundListView) {
+	soundListView.children().remove();
+	for (var i in listenerApp.soundList) {
+		var sound = listenerApp.soundList[i];
+		var li = $('<li>').text(sound.title);
+		soundListView.append(li);
+	}
+}
+
 /**
  * @param {Object} event
  * @base _list_page
@@ -19,5 +28,23 @@ _list_page.prototype.startButton_ontap = function(event) {
 */
 _list_page.prototype.newSoundButton_ontap = function(event) {
 	pageManager.changePage('newsound', {});
+};
+
+/**
+ * @param {Object} event
+ * @base _list_page
+ * @returns {Boolean}
+*/
+_list_page.prototype.onpagebeforeshow = function(event) {
+	updateSoundList(this.soundListView);
+};
+
+/**
+ * @param {Object} event
+ * @base _list_page
+ * @returns {Boolean}
+*/
+_list_page.prototype.settingsButton_ontap = function(event) {
+	pageManager.changePage('settings');
 };
 

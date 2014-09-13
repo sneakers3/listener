@@ -27,6 +27,8 @@ _settings_page.prototype.checkboxitem1 = undefined;
 _settings_page.prototype.checkboxitem2 = undefined;
 
 // default widget event handler
+_settings_page.prototype.backButton_ontap = function(event) {};
+_settings_page.prototype.helpButton_ontap = function(event) {};
 
 _settings_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, managedCssPath) {
 	this.htmlPath = htmlPath;
@@ -72,6 +74,8 @@ _settings_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, ma
 		_settings_page.prototype.checkboxitem2 = $("#settings #checkboxitem2");
 
 		// bind widget event handler
+		_settings_page.prototype.backButton.bind("tap", function(event) { _settings_page.prototype.backButton_ontap(event); });
+		_settings_page.prototype.helpButton.bind("tap", function(event) { _settings_page.prototype.helpButton_ontap(event); });
 
 	}, isStartPage);
 

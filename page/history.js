@@ -21,3 +21,12 @@ _history_page.prototype.onpagebeforeshow = function(event) {
 	console.log('history page before show');
 };
 
+/**
+ * @param {Object} event
+ * @base _history_page
+ * @returns {Boolean}
+*/
+_history_page.prototype.backButton_ontap = function(event) {
+	pageManager.changePage('list');
+};
+

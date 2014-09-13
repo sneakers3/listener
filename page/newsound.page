@@ -25,7 +25,7 @@
                 <tizen.page id="newsound" data-dom-cache="false" data-title="">
                     <tizen.header id="newSoundHeader" text="New Sound" text2="" data-position="fixed" icon-id="" src=""/>
                     <tizen.content id="content1" data-handler="false">
-                        <html.text id="soundTitle" text="Sound Title"/>
+                        <html.textinput id="soundTitle" type="text" name="soundTitle" placeholder="Sound Title" value=""/>
                         <html.divcontrol id="soundView" style="overflow: hidden;" class=""/>
                         <tizen.button id="recordButton" text="Record/Stop" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="recordButton_ontap"/>
                         <tizen.button id="okButton" text="OK" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="okButton_ontap"/>

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain/listener" version="0.2.1" viewmodes="maximized">
+<widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets" id="http://yourdomain/listener" version="0.2.1" viewmodes="maximized">
     <tizen:application id="Q6h3JqplUf.listener" package="Q6h3JqplUf" required_version="2.2"/>
     <content src="app.html"/>
     <feature name="http://tizen.org/feature/screen.size.all"/>
+    <feature name="http://tizen.org/feature/microphone"/>
     <icon src="icon.png"/>
     <name>listener</name>
-    <tizen:privilege name="http://tizen.org/privilege/application.launch"/>  
+    <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+    <tizen:privilege name="http://tizen.org/privilege/notification"/>
+    <tizen:privilege name="http://tizen.org/privilege/mediacapture"/>  
 	 
 	 
 	 

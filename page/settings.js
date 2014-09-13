@@ -3,3 +3,21 @@
 * User should hand edit this file.
 ********************************************************************************/
 
+/**
+ * @param {Object} event
+ * @base _settings_page
+ * @returns {Boolean}
+*/
+_settings_page.prototype.backButton_ontap = function(event) {
+	pageManager.changePage('list');
+};
+
+/**
+ * @param {Object} event
+ * @base _settings_page
+ * @returns {Boolean}
+*/
+_settings_page.prototype.helpButton_ontap = function(event) {
+	pageManager.changePage('help');
+};
+

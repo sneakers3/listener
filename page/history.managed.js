@@ -24,6 +24,7 @@ _history_page.prototype.content1 = undefined;
 _history_page.prototype.alertList = undefined;
 
 // default widget event handler
+_history_page.prototype.backButton_ontap = function(event) {};
 
 _history_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, managedCssPath) {
 	this.htmlPath = htmlPath;
@@ -54,6 +55,7 @@ _history_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, man
 		_history_page.prototype.alertList = $("#history #alertList");
 
 		// bind widget event handler
+		_history_page.prototype.backButton.bind("tap", function(event) { _history_page.prototype.backButton_ontap(event); });
 
 	}, isStartPage);
 

@@ -1,5 +1,10 @@
+
 var listenerApp;
 
+/**
+ * Listener App model
+ * @class
+ */
 function ListenerApp() {
 	this.soundList = []; // Sound list
 	this.currentState = 'stopped'; // 'stopped' | 'running'
@@ -8,6 +13,15 @@ function ListenerApp() {
 	this.notiSettings = {}; // handles 'ignore 5mins' 
 }
 
+/**
+ * Sound model
+ * @param id
+ * @param title
+ * @param soundData
+ * @param summary
+ * @param alertMethods
+ * @class
+ */
 function Sound(id, title, soundData, summary, alertMethods) {
 	this.id = id;
 	this.title = title;
@@ -16,36 +30,108 @@ function Sound(id, title, soundData, summary, alertMethods) {
 	this.alertMethods = alertMethods; // ('flash' | 'vibrate') set
 }
 
+/**
+ * Alert model
+ * @param soundID
+ * @param timestamp
+ * @class
+ */
 function Alert(soundID, timestamp) {
 	this.soundID = soundID;
 	this.timestamp = timestamp;
 }
 
-function onNewAlert() {
-	
+/**
+ * Handler for new alert
+ * @param alert
+ */
+function onNewAlert(alert) {
+	// TODO
 }
 
-function addNewSound() {
-	
+/**
+ * 
+ * @returns {Number}
+ */
+function generateNewSoundID() {
+	var maxid = 0;
+	for(var i in listenerApp.soundList) {
+		var sound = listenerApp.soundList[i];
+		maxid = (sound.id > maxid) ? sound.id : maxid; 
+	}
+	return maxid + 1;
 }
 
-function editSound() {
-	
+/**
+ * Analyze sound data and return summary
+ * @param soundData
+ * @returns {String}
+ */
+function summarizeSound(soundData) {
+	// TODO 
+	return '';
 }
 
-function runListening() {
-	
+/**
+ * Add new sound
+ * @param title
+ * @param soundData
+ * @returns {Sound}
+ */
+function addNewSound(title, soundData) {
+	console.log('addNewSound');
+	var newid = generateNewSoundID();
+	var summary = summarizeSound(soundData);
+	var newSound = new Sound(newid, title, soundData, summary, ['flash', 'vibrate']);  
+	listenerApp.soundList.push(newSound);
+	return newSound;
 }
 
-function stopListening() {
-	
+/**
+ * Change sound properties
+ */
+function changeSound() {
+	// TODO
 }
 
+/**
+ * Start listening
+ */
+function start() {
+	// TODO
+}
 
+/**
+ * Stop listening
+ */
+function stop() {
+	// TODO
+}
+
+/**
+ * load saved sounds and settings
+ */
 function load() {
-	// TODO: load saved sounds and settings
+	// TODO
 }
-function init() {
-	listnerApp = new ListenerApp();
+
+/**
+ * save sounds and settings
+ */
+function save() {
+	// TODO
+}
+
+/**
+ * Initialize app
+ */
+function initApp() {
+	console.log('init');
+	listenerApp = new ListenerApp();
 	load();
 }
+
+app.onload = function () {
+	console.log('app onload');
+	initApp();
+};

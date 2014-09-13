@@ -19,9 +19,10 @@
                 </tizen.selector>
             </tizen.css>
             <tizen.doc>
-                <tizen.page id="intro" data-dom-cache="false" data-title="">
+                <tizen.page id="intro" data-dom-cache="false" data-title="" onpageshow="onpageshow">
                     <tizen.content id="content1" data-handler="false">
                         <html.label id="label1" text="what a beautiful day.."/>
+                        <html.image id="introImage" src="../res/masami.jpg" width="120" width-unit="px" height="150" height-unit="px" text-align="center" display="block"/>
                         <tizen.button id="button1" text="go to list" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="button1_ontap"/>
                     </tizen.content>
                 </tizen.page>

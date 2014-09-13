@@ -12,3 +12,16 @@ _intro_page.prototype.button1_ontap = function(event) {
 	pageManager.changePage('list');
 };
 
+/**
+ * @param {Object} event
+ * @base _intro_page
+ * @returns {Boolean}
+*/
+_intro_page.prototype.onpageshow = function(event) {
+	console.log('intro page show');
+	setTimeout(function () {
+		console.log('go to list');
+		pageManager.changePage('list');
+	}, 3000);
+};
+

@@ -23,6 +23,7 @@ _help_page.prototype.backButton = undefined;
 _help_page.prototype.content1 = undefined;
 
 // default widget event handler
+_help_page.prototype.backButton_ontap = function(event) {};
 
 _help_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, managedCssPath) {
 	this.htmlPath = htmlPath;
@@ -48,6 +49,7 @@ _help_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, manage
 		_help_page.prototype.content1 = $("#help #content1");
 
 		// bind widget event handler
+		_help_page.prototype.backButton.bind("tap", function(event) { _help_page.prototype.backButton_ontap(event); });
 
 	}, isStartPage);
 
