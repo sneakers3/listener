@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tizenFile>
+    <fileInfo>
+        <type>tizen-page</type>
+        <version>0.0.2</version>
+        <desc>Tizen Web UI Builder Project</desc>
+    </fileInfo>
+    <document>
+        <documentInfo>
+            <title>test</title>
+            <author>noname</author>
+            <version>0.1.1</version>
+        </documentInfo>
+        <documentData>
+            <tizen.css>
+                <tizen.selector name="#label1" partId="label1">
+                    <tizen.style name="font-size" value="30px"/>
+                </tizen.selector>
+            </tizen.css>
+            <tizen.doc>
+                <tizen.page id="intro" data-dom-cache="false" data-title="">
+                    <tizen.content id="content1" data-handler="false">
+                        <html.label id="label1" text="what a beautiful day.."/>
+                        <tizen.button id="button1" text="go to list" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="button1_ontap"/>
+                    </tizen.content>
+                </tizen.page>
+            </tizen.doc>
+        </documentData>
+    </document>
+</tizenFile>

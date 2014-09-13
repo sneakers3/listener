@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tizenFile>
+    <fileInfo>
+        <type>tizen-project</type>
+        <version>0.0.2</version>
+        <desc>Tizen Web UI Builder Project</desc>
+    </fileInfo>
+    <tizenProject>
+        <metas>
+            <meta type="framework" param="name='viewport'" param2="content='width=%viewportmode%,user-scalable=no'"/>
+        </metas>
+        <libraries>
+            <library type="framework" param="@tizen_jquery"/>
+            <library type="framework" param="@tizen_lib"/>
+            <library type="framework" param="@tizen_core"/>
+            <library type="system" param="./tizen-ui-builder-fw/page-system.js"/>
+            <library type="system" param="./app.managed.js"/>
+            <library type="pages" param="all"/>
+            <library type="entry" param="./tizen-ui-builder-fw/app-entry.js"/>
+            <library type="entry" param="./app.js"/>
+            <library type="user" param="./js/listener.js"/>
+        </libraries>
+        <frameworks>
+            <variables>
+                <variable name="theme" value="tizen-white"/>
+                <variable name="viewportmode" value="device-width"/>
+            </variables>
+            <framework param="@tizen_jquery" path="tizen-web-ui-fw/latest/js/jquery.js"/>
+            <framework param="@tizen_lib" path="tizen-web-ui-fw/latest/js/tizen-web-ui-fw-libs.js"/>
+            <framework param="@tizen_core" path="tizen-web-ui-fw/latest/js/tizen-web-ui-fw.js" param2="data-framework-theme='%theme%'"/>
+        </frameworks>
+        <pages>
+            <page name="intro" startup="true" pagePath="page/intro.page" jsPath="page/intro.js" managedJsPath="page/intro.managed.js" htmlPath="page/intro.html" cssPath="page/intro.css" managedCssPath="page/intro.managed.css"/>
+            <page name="list" startup="false" pagePath="page/list.page" jsPath="page/list.js" managedJsPath="page/list.managed.js" htmlPath="page/list.html" cssPath="page/list.css" managedCssPath="page/list.managed.css"/>
+            <page name="newsound" startup="false" pagePath="page/newsound.page" jsPath="page/newsound.js" managedJsPath="page/newsound.managed.js" htmlPath="page/newsound.html" cssPath="page/newsound.css" managedCssPath="page/newsound.managed.css"/>
+            <page name="history" startup="false" pagePath="page/history.page" jsPath="page/history.js" managedJsPath="page/history.managed.js" htmlPath="page/history.html" cssPath="page/history.css" managedCssPath="page/history.managed.css"/>
+            <page name="settings" startup="false" pagePath="page/settings.page" jsPath="page/settings.js" managedJsPath="page/settings.managed.js" htmlPath="page/settings.html" cssPath="page/settings.css" managedCssPath="page/settings.managed.css"/>
+            <page name="help" startup="false" pagePath="page/help.page" jsPath="page/help.js" managedJsPath="page/help.managed.js" htmlPath="page/help.html" cssPath="page/help.css" managedCssPath="page/help.managed.css"/>
+        </pages>
+        <stylesheets>
+            <stylesheet type="framework" param="tizen-web-ui-fw/latest/themes/%theme%/tizen-web-ui-fw-theme.css" param2="name='tizen-theme'"/>
+            <stylesheet type="user" param="./app.css"/>
+        </stylesheets>
+    </tizenProject>
+</tizenFile>

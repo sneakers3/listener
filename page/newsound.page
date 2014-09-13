@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tizenFile>
+    <fileInfo>
+        <type>tizen-page</type>
+        <version>0.0.2</version>
+        <desc>Tizen Web UI Builder Project</desc>
+    </fileInfo>
+    <document>
+        <documentInfo>
+            <title>test</title>
+            <author>noname</author>
+            <version>0.1.1</version>
+        </documentInfo>
+        <documentData>
+            <tizen.css>
+                <tizen.selector name="#soundView" partId="soundView">
+                    <tizen.style name="height" value="300px"/>
+                    <tizen.style name="border-style" value="solid"/>
+                    <tizen.style name="border-color" value="#800040"/>
+                    <tizen.style name="border-width" value="3px"/>
+                </tizen.selector>
+            </tizen.css>
+            <tizen.doc>
+                <tizen.page id="newsound" data-dom-cache="false" data-title="">
+                    <tizen.header id="newSoundHeader" text="New Sound" text2="" data-position="fixed" icon-id="" src=""/>
+                    <tizen.content id="content1" data-handler="false">
+                        <html.text id="soundTitle" text="Sound Title"/>
+                        <html.divcontrol id="soundView" style="overflow: hidden;" class=""/>
+                        <tizen.button id="recordButton" text="Record/Stop" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="recordButton_ontap"/>
+                        <tizen.button id="okButton" text="OK" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="okButton_ontap"/>
+                        <tizen.button id="cancelButton" text="Cancel" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="cancelButton_ontap"/>
+                    </tizen.content>
+                </tizen.page>
+            </tizen.doc>
+        </documentData>
+    </document>
+</tizenFile>
