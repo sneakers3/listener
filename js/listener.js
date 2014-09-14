@@ -129,9 +129,27 @@ function initApp() {
 	console.log('init');
 	listenerApp = new ListenerApp();
 	load();
+	init_Audio();
 }
 
 app.onload = function () {
 	console.log('app onload');
 	initApp();
 };
+
+
+/**
+ * Initialize for html5 audio
+ */
+function init_Audio() {
+    navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia );
+
+    window.requestAnimFrame = ( function() { 
+        return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame ||
+                function(callback, element) { 
+                    window.setTimeout(callback, 1000 / 60);
+                };
+    })();
+        
+    window.AudioContext = ( function() { return  window.webkitAudioContext || window.AudioContext || window.mozAudioContext; } )();
+}

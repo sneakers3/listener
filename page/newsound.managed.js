@@ -22,6 +22,7 @@ _newsound_page.prototype.newSoundHeader = undefined;
 _newsound_page.prototype.content1 = undefined;
 _newsound_page.prototype.soundTitle = undefined;
 _newsound_page.prototype.soundView = undefined;
+_newsound_page.prototype.soundCanvas = undefined;
 _newsound_page.prototype.recordButton = undefined;
 _newsound_page.prototype.okButton = undefined;
 _newsound_page.prototype.cancelButton = undefined;
@@ -58,6 +59,11 @@ _newsound_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, ma
 		 * @type jQueryObject
 		 */
 		_newsound_page.prototype.soundView = $("#newsound #soundView");
+
+		/**
+		 * @type jQueryObject
+		 */
+		_newsound_page.prototype.soundCanvas = $("#newsound #soundCanvas");
 
 		/**
 		 * @type jQueryObject

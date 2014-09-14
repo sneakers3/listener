@@ -26,7 +26,9 @@
                     <tizen.header id="newSoundHeader" text="New Sound" text2="" data-position="fixed" icon-id="" src=""/>
                     <tizen.content id="content1" data-handler="false">
                         <html.textinput id="soundTitle" type="text" name="soundTitle" placeholder="Sound Title" value=""/>
-                        <html.divcontrol id="soundView" style="overflow: hidden;" class=""/>
+                        <html.divcontrol id="soundView" style="overflow: hidden;" class="">
+                            <html.canvas id="soundCanvas" width="340" height="300"/>
+                        </html.divcontrol>
                         <tizen.button id="recordButton" text="Record/Stop" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="recordButton_ontap"/>
                         <tizen.button id="okButton" text="OK" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="okButton_ontap"/>
                         <tizen.button id="cancelButton" text="Cancel" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="cancelButton_ontap"/>
