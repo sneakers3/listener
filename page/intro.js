@@ -22,6 +22,6 @@ _intro_page.prototype.onpageshow = function(event) {
 	setTimeout(function () {
 		console.log('go to list');
 		pageManager.changePage('list');
-	}, 3000);
+	}, 1000);
 };
 

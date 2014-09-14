@@ -3,6 +3,9 @@
 * User should hand edit this file.
 ********************************************************************************/
 
+
+var editPopup;
+
 function updateSoundList(soundListView) {
 	soundListView.children().remove();
 	for (var i in listenerApp.soundList) {
@@ -10,6 +13,17 @@ function updateSoundList(soundListView) {
 		var li = $('<li>').text(sound.title);
 		soundListView.append(li);
 	}
+}
+
+function initEditPopup(content) {
+	// Add sound edit popup and initialize it
+	editPopup = $('<div data-role="popup" id="soundDialog"><form><input data-inline="true" value="Play" type="button"><input data-icon="delete" data-iconpos="notext" value="Icon only" type="button"></form></div>');
+	content.append(editPopup);
+	editPopup.popup();
+//	editPopup.load('./editPopup.html', '', function () {
+//		console.log('load editPopup', arguments);
+//		editPopup.popup();
+//	});
 }
 
 /**
@@ -46,5 +60,33 @@ _list_page.prototype.onpagebeforeshow = function(event) {
 */
 _list_page.prototype.settingsButton_ontap = function(event) {
 	pageManager.changePage('settings');
+};
+
+/**
+ * @param {Object} event
+ * @base _list_page
+ * @returns {Boolean}
+*/
+_list_page.prototype.soundListView_ontap = function(event) {
+	console.log('soundListView tap');
+};
+
+/**
+ * @param {Object} event
+ * @base _list_page
+ * @returns {Boolean}
+*/
+_list_page.prototype.soundListView_ontaphold = function(event) {
+	console.log('soundListView taphold');
+	editPopup.popup('open');
+};
+
+/**
+ * @param {Object} event
+ * @base _list_page
+ * @returns {Boolean}
+*/
+_list_page.prototype.onpageinit = function(event) {
+	initEditPopup(this.content);
 };
 

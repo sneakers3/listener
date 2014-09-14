@@ -21,10 +21,8 @@ _intro_page.prototype = new _page("intro");
 _intro_page.prototype.content1 = undefined;
 _intro_page.prototype.label1 = undefined;
 _intro_page.prototype.introImage = undefined;
-_intro_page.prototype.button1 = undefined;
 
 // default widget event handler
-_intro_page.prototype.button1_ontap = function(event) {};
 
 _intro_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, managedCssPath) {
 	this.htmlPath = htmlPath;
@@ -49,13 +47,7 @@ _intro_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, manag
 		 */
 		_intro_page.prototype.introImage = $("#intro #introImage");
 
-		/**
-		 * @type jQueryObject
-		 */
-		_intro_page.prototype.button1 = $("#intro #button1");
-
 		// bind widget event handler
-		_intro_page.prototype.button1.bind("tap", function(event) { _intro_page.prototype.button1_ontap(event); });
 
 	}, isStartPage);
 

@@ -22,8 +22,7 @@
                 <tizen.page id="intro" data-dom-cache="false" data-title="" onpageshow="onpageshow">
                     <tizen.content id="content1" data-handler="false">
                         <html.label id="label1" text="Listener"/>
-                        <html.image id="introImage" src="../res/masami.jpg" width="120" width-unit="px" height="150" height-unit="px" text-align="center" display="block"/>
-                        <tizen.button id="button1" text="go to list" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="button1_ontap"/>
+                        <html.image id="introImage" src="../res/masami.jpg" width="240" width-unit="px" height="300" height-unit="px" text-align="center" display="block"/>
                     </tizen.content>
                 </tizen.page>
             </tizen.doc>
