@@ -11,6 +11,7 @@ function ListenerApp() {
 	this.history = []; // Alert list
 	this.settings = {};
 	this.notiSettings = {}; // handles 'ignore 5mins' 
+	this.alertListeners = [];
 }
 
 /**
@@ -46,7 +47,14 @@ function Alert(soundID, timestamp) {
  * @param alert
  */
 function onNewAlert(alert) {
-	// TODO
+	for (var i in listenerApp.alertListeners) {
+		var l = listenserApp.alertListeners[i];
+		l(alert);
+	}
+}
+
+function addAlertListener(alertListener) {
+	listenerApp.alertListeners.push(alertListener);
 }
 
 /**
@@ -99,6 +107,8 @@ function changeSound() {
  */
 function start() {
 	// TODO
+	console.log('start');
+	listenerApp.currentState = 'running';
 }
 
 /**
@@ -106,6 +116,8 @@ function start() {
  */
 function stop() {
 	// TODO
+	console.log('stop');
+	listenerApp.currentState = 'stopped';
 }
 
 /**
@@ -113,6 +125,7 @@ function stop() {
  */
 function load() {
 	// TODO
+	console.log('load');
 }
 
 /**
@@ -120,6 +133,7 @@ function load() {
  */
 function save() {
 	// TODO
+	console.log('save');
 }
 
 /**
