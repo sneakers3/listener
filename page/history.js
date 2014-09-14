@@ -4,12 +4,21 @@
 ********************************************************************************/
 
 /**
+ * Add new alert to history
+ */
+function addNewAlert() {
+	
+}
+
+
+/**
  * @param {Object} event
  * @base _history_page
  * @returns {Boolean}
 */
 _history_page.prototype.onpagebeforehide = function(event) {
 	console.log('history page before hide');
+	stop();
 };
 
 /**
@@ -19,6 +28,7 @@ _history_page.prototype.onpagebeforehide = function(event) {
 */
 _history_page.prototype.onpagebeforeshow = function(event) {
 	console.log('history page before show');
+	start();
 };
 
 /**

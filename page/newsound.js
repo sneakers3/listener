@@ -21,7 +21,8 @@ _newsound_page.prototype.okButton_ontap = function(event) {
  * @returns {Boolean}
 */
 _newsound_page.prototype.cancelButton_ontap = function(event) {
-    console.log('cancel button tap');
+	console.log('cancel button tap');
+	pageManager.changePage('list');
 };
 
 /**
