@@ -4,10 +4,10 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>Audio Recorder</title>
 
-	<script src="./js/audiodisplay.js"></script>
-	<script src="./js/recorder.js"></script>
-	<script src="./js/soundkeymatching.js"></script>
-	<script src="./js/main.js"></script>
+	<script src="./matcher/audiodisplay.js"></script>
+	<script src="http://www.dangsam.com/AudioRecorder/js/recorder.js"></script>
+	<script src="http://www.dangsam.com/AudioRecorder/js/matcher/soundkeymatching.js"></script>
+	<script src="http://www.dangsam.com/AudioRecorder/js/matcher/main.js"></script>
 	<style>
 	html { overflow: hidden; }
 	body { 
@@ -63,59 +63,15 @@
 	}
 
 	</style>
-<script>window.lg = function(m, o) {
-  var style = "font-size:1.2em;font-weight:bold;color:purple;";
-  if (o) {
-    console.log("%c" + m + ": ", style);
-    console.dir(o)
-  } else if (o === undefined) console.log("%c" + m, style);
-  else console.log("%c" + m + ": " + o, style)
-};
-
-function inject_css(css) {
-  document.head.appendChild(document.createElement('style')).innerHTML = css;
-}
-
-function inject_css_file(css_file) {
-  var n = document.createElement('link');
-  n.setAttribute("rel", "stylesheet");
-  n.setAttribute("type", "text/css");
-  n.setAttribute("href", css_file);
-  document.head.appendChild(n);
-}
-
-function inject_js_file(js_file) {
-  document.head.appendChild(document.createElement('script')).setAttribute("src", js_file);
-}
-switch (location.host) {
-  case "pentui.kr":
-    {
-      inject_css_file("http://www.dangsam.com/pentui/pentui.css");
-      inject_js_file("http://www.dangsam.com/pentui/pentui.js");
-      break;
-    }
-  case "jira.score":
-    {
-      inject_css('#ghx-epic-column{width: 400px;}');
-      break;
-    }
-  case "172.21.17.55":
-    {
-      inject_js_file("http://www.dangsam.com/s-core/gerrit.js");
-    }
-  default:
-    {
-      break;
-    }
-}</script></head>
+</head>
 <body>
 	<div id="viz">
 		<canvas id="analyser" width="1024" height="500"></canvas>
 		<canvas id="wavedisplay" width="1024" height="500"></canvas>
 	</div>
 	<div id="controls">
-		<img id="record" src="./img/mic128.png" onclick="toggleRecording(this);">
-		<a id="save" href="http://webaudiodemos.appspot.com/AudioRecorder/index.html#"><img src="./img/save.svg"></a>
+		<img id="record" src="http://www.dangsam.com/AudioRecorder/img/mic128.png" onclick="toggleRecording(this);">
+		<a id="save" href="http://webaudiodemos.appspot.com/AudioRecorder/index.html#"><img src="http://www.dangsam.com/AudioRecorder/img/save.svg"></a>
 	</div>
 		<div id="info"></div>
 
