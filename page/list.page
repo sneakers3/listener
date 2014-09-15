@@ -25,6 +25,7 @@
                     <tizen.content id="content" data-handler="false">
                         <tizen.list id="soundListView" data-autodividers="false" data-fastscroll="false" ontap="soundListView_ontap" ontaphold="soundListView_ontaphold"/>
                         <tizen.button id="startButton" text="Start" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="startButton_ontap"/>
+                        <html.htmlblock id="htmlblock1" class="">&lt;div data-role="popup" id="soundDialog"&gt; &lt;form&gt; Edit Sound &lt;input data-inline="true" value="Play" type="button"&gt;&lt;input data-inline="true" value="" type="text"&gt; &lt;/form&gt;&lt;/div&gt;</html.htmlblock>
                     </tizen.content>
                 </tizen.page>
             </tizen.doc>
