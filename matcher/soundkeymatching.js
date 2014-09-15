@@ -5,7 +5,7 @@ function SoundKeyMatching(options) {
 	var matchingFunction = null;
 	var matchingData = [];	// 비교가 필요한 데이터들과 매칭결과를 알려줄 핸들러들
 	var opt = applyOption(options);
-		
+	
 	var info = {
 		volumeLevel: 0,	// 현재 전체 볼륨 레벨
 		maxLevel: 0,	// 최대 level
@@ -28,7 +28,7 @@ function SoundKeyMatching(options) {
 			info.volumeLevel > info.maxLevel) {
 			info.maxLevel = info.volumeLevel;
 			info.afterMaxLevel = 0;
-			maxLevelSampleData = samplingFunction(data);
+			maxLevelSampleData = samplingFunction(data, info.volumeLevel);
 		}
 		
 		// 최대 level 이 한동안 갱신되지 않는다면 샘플이 완료된 것으로 간주하고 추출
@@ -104,18 +104,14 @@ function SoundKeyMatching(options) {
 	}
 	
 	// volume level 검출
-	function getSampleFromData1(data) {
+	function getSampleFromData1(data, volume) {
 		var sample = {};
-		var volumeLevel = 0;
-		for (var i in data) {
-			volumeLevel += data[i];
-		}
-		sample.volume = volumeLevel;
+		sample.volume = volume;
 		return sample;
 	}
 	
 	// peak 와 내리막 검출
-	function getSampleFromData2(data) {
+	function getSampleFromData2(data, volume) {
 		var sample = {};
 		var freqLevel = 0;
 		var maxFreqIndex = null;
@@ -150,12 +146,13 @@ function SoundKeyMatching(options) {
 			sample = null;;
 		} else {
 			sample.size = peakCount;
+			sample.volume = volume;
 		}
 		return sample;
 	}
 	
 	// 이동평균 peak 검출
-	function getSampleFromData3(data) {
+	function getSampleFromData3(data, volume) {
 		var sample = {};
 		var freqLevel = 0;
 		var maxFreqIndex = null;
