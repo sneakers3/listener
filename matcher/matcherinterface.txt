@@ -1,0 +1,17 @@
+matcher.startSampling()
+=> non-block
+matcher.stopSampling()
+=> return samplePackage
+
+
+matcher.startMatching(samplePackage[], matchingHandler)
+=> non-block
+=> callback matchingHandler(samplePackageIndex)
+matcher.stopMatching()
+
+
+matcher.doSampling(freqdata)
+=> callback samplingHandler(sampledata)
+
+matcher.doMatching()
+=> callback matchingHandler(sampledata)
