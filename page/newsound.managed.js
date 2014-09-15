@@ -19,6 +19,7 @@ _newsound_page.prototype = new _page("newsound");
 
 // widget assist
 _newsound_page.prototype.newSoundHeader = undefined;
+_newsound_page.prototype.backButton = undefined;
 _newsound_page.prototype.content1 = undefined;
 _newsound_page.prototype.soundTitle = undefined;
 _newsound_page.prototype.soundView = undefined;
@@ -28,6 +29,7 @@ _newsound_page.prototype.okButton = undefined;
 _newsound_page.prototype.cancelButton = undefined;
 
 // default widget event handler
+_newsound_page.prototype.backButton_ontap = function(event) {};
 _newsound_page.prototype.recordButton_ontap = function(event) {};
 _newsound_page.prototype.okButton_ontap = function(event) {};
 _newsound_page.prototype.cancelButton_ontap = function(event) {};
@@ -44,6 +46,11 @@ _newsound_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, ma
 		 * @type jQueryObject
 		 */
 		_newsound_page.prototype.newSoundHeader = $("#newsound #newSoundHeader");
+
+		/**
+		 * @type jQueryObject
+		 */
+		_newsound_page.prototype.backButton = $("#newsound #backButton");
 
 		/**
 		 * @type jQueryObject
@@ -81,6 +88,7 @@ _newsound_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, ma
 		_newsound_page.prototype.cancelButton = $("#newsound #cancelButton");
 
 		// bind widget event handler
+		_newsound_page.prototype.backButton.bind("tap", function(event) { _newsound_page.prototype.backButton_ontap(event); });
 		_newsound_page.prototype.recordButton.bind("tap", function(event) { _newsound_page.prototype.recordButton_ontap(event); });
 		_newsound_page.prototype.okButton.bind("tap", function(event) { _newsound_page.prototype.okButton_ontap(event); });
 		_newsound_page.prototype.cancelButton.bind("tap", function(event) { _newsound_page.prototype.cancelButton_ontap(event); });

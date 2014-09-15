@@ -165,3 +165,12 @@ function clearCanvas() {
     ctx.lineTo(canvasWidth-1, y);
     ctx.stroke();
 }
+/**
+ * @param {Object} event
+ * @base _newsound_page
+ * @returns {Boolean}
+*/
+_newsound_page.prototype.backButton_ontap = function(event) {
+	pageManager.changePage('list');
+};
+
