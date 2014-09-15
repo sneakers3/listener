@@ -41,41 +41,10 @@ _history_page.prototype.backButton_ontap = function(event) {
 };
 
 function test() {
-	console.log('ee');
 	
-	//var matcher = new Matcher();
-	//var packages = [];
-	function info(msg) {
-		document.getElementById("info").innerText = msg;
-	}
-	matcher.setDebugHandler(info);
-	function startSampling() {
-		matcher.startSampling();
-		console.log("matcher.startSampling();");
-	}
-	function stopSampling() {
-		var samplePackage = matcher.stopSampling();
-		console.log("matcher.stopSampling();");
-		packages.push(samplePackage);
-		console.log("package received #" + packages.length);
-	}
-	
-	function sampleMatched(sampleIndex) {
-		console.log("sample matched #" + sampleIndex);
-	}
-	function startMatching() {
-		matcher.startMatching(packages, sampleMatched);
-		console.log("matcher.startMatching(packages, sampleMatched);");
-	}
-	function stopMatching() {
-		matcher.stopMatching();
-		console.log("matcher.stopMatching();");
-	}
-	
-	
-	
-	
-	//$('#notification').notification('open');
+	// FIXME::
+	$('#notification').notification('open').on("click", function(){alert('open')});
+	//$('#notification2').notification('open');
 //	$( "div.test" ).on("pagecreate", function () {
 //		$('#noti-demo').on('vmouseup', function ( e ) {
 //			$('#notification').notification('open');

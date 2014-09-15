@@ -18,15 +18,15 @@ function ListenerApp() {
  * @param id
  * @param title
  * @param soundData
- * @param summary
+ * @param samplePackage
  * @param alertMethods
  * @class
  */
-function Sound(id, title, soundData, summary, alertMethods) {
+function Sound(id, title, soundData, samplePackage, alertMethods) {
     this.id = id;
     this.title = title;
     this.soundData = soundData;
-    this.summary = summary;
+    this.samplePackage = samplePackage;
     this.alertMethods = alertMethods; // ('flash' | 'vibrate') set
 }
 
@@ -71,26 +71,15 @@ function generateNewSoundID() {
 }
 
 /**
- * Analyze sound data and return summary
- * @param soundData
- * @returns {String}
- */
-function summarizeSound(soundData) {
-    // TODO 
-    return '';
-}
-
-/**
  * Add new sound
  * @param title
  * @param soundData
  * @returns {Sound}
  */
-function addNewSound(title, soundData) {
+function addNewSound(title, soundData, samplePackage) {
     console.log('addNewSound');
     var newid = generateNewSoundID();
-    var summary = summarizeSound(soundData);
-    var newSound = new Sound(newid, title, soundData, summary, ['flash', 'vibrate']);  
+    var newSound = new Sound(newid, title, soundData, samplePackage, ['flash', 'vibrate']);  
     listenerApp.soundList.push(newSound);
     return newSound;
 }
@@ -143,7 +132,6 @@ function initApp() {
     console.log('init');
     listenerApp = new ListenerApp();
     load();
-    init_Audio();
     init_Matcher();
 }
 
@@ -156,26 +144,26 @@ app.onload = function () {
  * Initialize for Matcher
  */
 var matcher;
-var packages = [];
 function init_Matcher() {
     matcher = new Matcher();
 }
 
-/**
- * Initialize for html5 audio
- */
-function init_Audio() {
-    navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia );
-
-    window.requestAnimFrame = ( function() { 
-        return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame ||
-                function(callback, element) { 
-                    window.setTimeout(callback, 1000 / 60);
-                };
-    })();
-
-    window.AudioContext = ( function() { return  window.webkitAudioContext || window.AudioContext || window.mozAudioContext; } )();
-}
+// FIXME
+///**
+// * Initialize for html5 audio
+// */
+//function init_Audio() {
+//    navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia );
+//
+//    window.requestAnimFrame = ( function() { 
+//        return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame ||
+//                function(callback, element) { 
+//                    window.setTimeout(callback, 1000 / 60);
+//                };
+//    })();
+//
+//    window.AudioContext = ( function() { return  window.webkitAudioContext || window.AudioContext || window.mozAudioContext; } )();
+//}
 
 
 /**
