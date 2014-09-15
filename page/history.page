@@ -18,6 +18,7 @@
                 <tizen.page id="history" data-dom-cache="false" data-title="" onpagebeforehide="onpagebeforehide" onpagebeforeshow="onpagebeforeshow">
                     <tizen.header id="header1" text="History" text2="" data-position="fixed" icon-id="" src="">
                         <tizen.headerbutton id="backButton" text="Back" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide" ontap="backButton_ontap"/>
+                        <tizen.headerbutton id="trashButton" text="trashButton" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide" ontap="trashButton_ontap"/>
                     </tizen.header>
                     <tizen.content id="content1" data-handler="false">
                         <tizen.list id="alertList" data-autodividers="false" data-fastscroll="false"/>
