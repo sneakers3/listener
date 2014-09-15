@@ -9,14 +9,17 @@ function Matcher(options) {
 	var samplePackage = [];
 	
 	function sampleReceived(sample) {
-		samplePackage.push(sample);
+		if (opt.samplingType == 1 && samplePackage.length > 0) {
+			if (sample.volume > samplePackage[0].volume) {
+				samplePackage[0] = sample;
+			}
+		} else {
+			samplePackage.push(sample);
+		}
 		console.log("sample received #" + samplePackage.length);
 	}
-	function informationReceived(msg) {
-		// todo: through
-	}
 	matching.setSamplingHandler(sampleReceived);
-	matching.setDebugHandler(informationReceived);
+	this.setDebugHandler = matching.setDebugHandler;
 	
 	var samplingTimer = null;
 	var matchingTimer = null;
