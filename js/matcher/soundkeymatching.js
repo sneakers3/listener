@@ -8,36 +8,29 @@ function SoundKeyMatching(options) {
 	
 	var info = {
 		volumeLevel: 0,	// 현재 전체 볼륨 레벨
-		maxLevel: 0,	// 최대 level
-		afterMaxLevel: 0,	// 최대 level 이후 몇 번의 주기가 지났는가?
+		maxLevel: opt.minSamplingVolumeLevel,	// 최대 level
 		sampleCount: 0,	// 샘플 추출 횟수
 	};
 	var maxLevelSampleData = null;	// 최대 level 일 때의 샘플링 데이터
 	
+	this.resetSampling = function () {
+		info.maxLevel = opt.minSamplingVolumeLevel;
+		info.sampleCount = 0;
+	}
+	
 	// call periodically while do sampling
 	// 반복적으로 호출해줘야 함 (초당 5~10회 추천)
 	this.doSampling = function(data) {
-		info.afterMaxLevel++;
-
 		// 볼륨 크기를 구해서
 		info.volumeLevel = 0;
 		for (var i in data) {
 			info.volumeLevel += data[i];
 		}
-		if (info.volumeLevel > opt.minSamplingVolumeLevel &&
-			info.volumeLevel > info.maxLevel) {
+		if (info.volumeLevel > info.maxLevel) {
 			info.maxLevel = info.volumeLevel;
-			info.afterMaxLevel = 0;
 			maxLevelSampleData = samplingFunction(data, info.volumeLevel);
-		}
-		
-		// 최대 level 이 한동안 갱신되지 않는다면 샘플이 완료된 것으로 간주하고 추출
-		if (info.afterMaxLevel > opt.sampleEndingCheck &&
-			info.maxLevel > opt.minSamplingVolumeLevel) {
 			this.samplingHandler(maxLevelSampleData);
 			info.sampleCount++;
-			info.maxLevel = 0;
-			maxLevelSampleData = null;
 		}
 		
 		debug();
@@ -126,14 +119,14 @@ function SoundKeyMatching(options) {
 			freqLevel = data[i];
 			// 주파수 별 레벨 봉우리(peak)를 찾는다.
 			if (freqLevel > maxFreqLevel &&
-				freqLevel > opt.minPeakLevel) {
+				freqLevel > opt.minCheckLevel) {
 				maxFreqIndex = i;
 				maxFreqLevel = freqLevel;
 				afterMaxFreqLevel = 0;
 			}
 			
 			// 봉우리가 한동안 갱신되지 않으면 진짜 봉우리로 인정
-			if (maxFreqLevel > opt.minPeakLevel &&
+			if (maxFreqLevel > opt.minCheckLevel &&
 				afterMaxFreqLevel > opt.peakEndingCheck) {
 				sample[maxFreqIndex] = maxFreqLevel;
 				peakCount++;
@@ -151,14 +144,16 @@ function SoundKeyMatching(options) {
 		return sample;
 	}
 	
-	// 이동평균 peak 검출
+	// peak/valley 검출
 	function getSampleFromData3(data, volume) {
 		var sample = {};
 		var freqLevel = 0;
 		var maxFreqIndex = null;
 		var maxFreqLevel = 0;
-		var afterMaxFreqLevel = 0;
-		var peakCount = 0;
+		var minFreqIndex = null;
+		var minFreqLevel = 255;
+		var afterTurnFreqLevel = 0;
+		var peakValleyCount = 0;	// peak + valley count
 		
 		var freqQueue = [];
 		var freqSum = 0;
@@ -166,33 +161,60 @@ function SoundKeyMatching(options) {
 			freqQueue.push(0);
 		}
 		
+		var findPeak = true;	// 봉우리를 찾는가? false: 계곡을 찾는가?
+		
 		// 모든 주파수 데이터를 순회하며
 		for (var i in data) {
-			afterMaxFreqLevel++;
+			afterTurnFreqLevel++;
 			
 			freqLevel = data[i];
-			// 주파수 별 레벨 봉우리(peak)를 찾는다.
-			if (freqLevel > maxFreqLevel &&
-				freqLevel > opt.minPeakLevel) {
-				maxFreqIndex = i;
-				maxFreqLevel = freqLevel;
-				afterMaxFreqLevel = 0;
-			}
 			
-			// 봉우리가 한동안 갱신되지 않으면 진짜 봉우리로 인정
-			if (maxFreqLevel > opt.minPeakLevel &&
-				afterMaxFreqLevel > opt.peakEndingCheck) {
-				sample[maxFreqIndex] = maxFreqLevel;
-				peakCount++;
-				maxFreqIndex = null;
-				maxFreqLevel = 0;
+			if (findPeak) {
+				// 주파수 별 레벨 봉우리(peak)를 찾는다.
+				if (freqLevel > maxFreqLevel &&
+					freqLevel > opt.minCheckLevel) {
+					maxFreqIndex = i;
+					maxFreqLevel = freqLevel;
+					afterTurnFreqLevel = 0;
+				}
+				
+				// 봉우리가 한동안 갱신되지 않으면 진짜 봉우리로 인정
+				if (maxFreqLevel > opt.minCheckLevel &&
+					afterTurnFreqLevel > opt.peakEndingCheck) {
+					sample[maxFreqIndex] = maxFreqLevel;
+					peakValleyCount++;
+					findPeak = false;	// 이제부터 계곡을 찾는다.
+					minFreqIndex = i;
+					minFreqLevel = freqLevel;
+					afterTurnFreqLevel = 0;
+				}
+			} else {	// find valley
+				// 주파수 별 레벨 봉우리(peak)를 찾는다.
+				if (freqLevel < minFreqLevel &&
+					freqLevel > opt.minCheckLevel) {
+					minFreqIndex = i;
+					minFreqLevel = freqLevel;
+					afterTurnFreqLevel = 0;
+				}
+				
+				// 계곡이 한동안 갱신되지 않으면 진짜 계곡으로 인정
+				if (minFreqLevel > opt.minCheckLevel &&
+					afterTurnFreqLevel > opt.peakEndingCheck) {
+					sample[minFreqIndex] = minFreqLevel;
+					peakValleyCount++;
+					findPeak = true;	// 이제부터 정상을 찾는다.
+					maxFreqIndex = i;
+					maxFreqLevel = freqLevel;
+					afterTurnFreqLevel = 0;
+				}
 			}
 		}
 		
-		if (peakCount == 0) {
+		if (peakValleyCount == 0) {
 			sample = null;;
 		} else {
-			sample.size = peakCount;
+			sample.size = peakValleyCount;
+			sample.volume = volume;
 		}
 		return sample;
 	}
@@ -209,12 +231,60 @@ function SoundKeyMatching(options) {
 	
 	// peak 와 내리막 검출
 	function matchSample2(sample, data) {
+		
 		return false;
 	}
 	
-	// 이동평균 peak 검출
+	// peak/valley 검출
 	function matchSample3(sample, data) {
-		return false;
+		var volumeLevel = 0;
+		for (var i in data) {
+			volumeLevel += data[i];
+		}
+		// 볼륨이 너무 작으면 실패
+		// 샘플 크기가 0 이라도 실패
+		if (volumeLevel < opt.minMatchingVolumeLevel ||
+			!sample ||
+			sample.size == 0) {
+			return false;
+		}
+
+		// normal 값 추출
+		var normalLevel = 0;
+		for (var i in sample) {
+			if (i === "size") break;
+			normalLevel += sample[i] - data[i];
+		}
+		normalLevel /= sample.size;
+		
+		// 모든 샘플을 순회하며 데이터와의 거리 합산
+		var totalDistance = 0;
+		var matchCount = 0;
+		for (var i in sample) {
+			if (i === "size") break;
+			// normalization
+			freqLevel = sample[i] - normalLevel;
+			
+			// 주변에서 제일 가까운 데이터와의 거리를 누적
+			i = parseInt(i);
+			var dataSize = data.length;
+			var minFreq = i - opt.matchingFreqTolerance < 0 ? 0 : i - opt.matchingFreqTolerance;
+			var maxFreq = i + opt.matchingFreqTolerance + 1 > dataSize ? dataSize : i + opt.matchingFreqTolerance + 1;
+			var minDistance = 256;
+			for (var j = minFreq; j < maxFreq; j++) {
+				var distance = Math.abs(freqLevel - data[j]);
+				if (distance < minDistance) {
+					minDistance = distance;
+				}
+			}
+			if (minDistance < opt.matchingLevelTolerance) {
+				matchCount++;
+			}
+			totalDistance += minDistance;
+		}
+		
+		// 매치된 정상/계곡의 개수가 충분한가?
+		return (matchCount >= sample.size * opt.matchingRate);
 	}
 	
 }
@@ -232,15 +302,15 @@ SoundKeyMatching.createOptions = function() {
 		minSamplingVolumeLevel: 10000, // 전체 볼륨이 얼만큼 이상일 때 샘플을 추출하는가? (minMatchingVolumeLevel 보다 높은 값을 권장)
 		minMatchingVolumeLevel: 5000, // 전체 볼륨이 얼만큼 이상일 때 매칭을 시도하는가? (minSamplingVolumeLevel 보다 낮은 값을 권장)
 		// 내리막 따라가기
-		minPeakLevel: 10,	// 주파수 대역별로 얼마의 level 이 되어야 정상으로 인식하는가?
-		peakEndingCheck: 20,	// 주파수 대역이 Max 이후로 몇 번 지나면 한 번의 봉우리가 완료된 것인가?
+		minCheckLevel: 10,	// 주파수 대역별로 얼마의 level 이 되어야 정상으로 인식하는가?
+		peakEndingCheck: 10,	// 주파수 대역이 Max 이후로 몇 번 지나면 한 번의 봉우리가 완료된 것인가?
 		// 정상 찾기
 		avgRange: 5,	// 얼만큼의 주파수 대역을 평균내서 정상/계곡을 찾을 것인가? (1 보다 커야 함)
 		
 		// 일반
 		sampleEndingCheck: 5,	// level 이 Max 이후로 몇 번 지나면 한 번의 샘플링이 완료된 것인가?
-		//useVallyMatching: false,	// 계곡도 매칭에 포함시킬 것인가?
-		matchingFreqTolerance: 5, // 정상/계곡 마다의 주파수 대역이 얼만큼 차이가 나도 일치한 것으로 보는가?
+		matchingFreqTolerance: 5, // 정상/계곡 마다의 주파수 대역을 좌우로 어디까지 비교해 볼 것인가?
+		matchingLevelTolerance: 5, // 정상/계곡 마다의 레벨이 얼만큼 차이가 나도 일치한 것으로 보는가?
 		matchingRate: 0.7	// 정상/계곡이 샘플 대비 몇 개나 일치해야 매칭으로 보는가?
 	};
 }
