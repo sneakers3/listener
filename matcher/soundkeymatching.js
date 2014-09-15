@@ -1,12 +1,11 @@
 function SoundKeyMatching(options) {
 	var samplingHandler = function() {};	// 샘플을 추출했을 때 알려줄 핸들러
 	var debugHandler = function(message) {};	// 디버그 메시지를 출력
+	var samplingFunction = null;
+	var matchingFunction = null;
 	var matchingData = [];	// 비교가 필요한 데이터들과 매칭결과를 알려줄 핸들러들
-	var opt = options;	// 샘플링과 매칭에 사용할 설정값들
-	if (opt === undefined) {
-		opt = SoundKeyMatching.createOptions();
-	}
-	
+	var opt = applyOption(options);
+		
 	var info = {
 		volumeLevel: 0,	// 현재 전체 볼륨 레벨
 		maxLevel: 0,	// 최대 level
@@ -20,7 +19,6 @@ function SoundKeyMatching(options) {
 	this.doSampling = function(data) {
 		info.afterMaxLevel++;
 
-		
 		// 볼륨 크기를 구해서
 		info.volumeLevel = 0;
 		for (var i in data) {
@@ -30,7 +28,7 @@ function SoundKeyMatching(options) {
 			info.volumeLevel > info.maxLevel) {
 			info.maxLevel = info.volumeLevel;
 			info.afterMaxLevel = 0;
-			maxLevelSampleData = getSampleFromData2(data);
+			maxLevelSampleData = samplingFunction(data);
 		}
 		
 		// 최대 level 이 한동안 갱신되지 않는다면 샘플이 완료된 것으로 간주하고 추출
@@ -45,6 +43,31 @@ function SoundKeyMatching(options) {
 		debug();
 	}
 	
+	// 옵션 설정
+	function applyOption(option) {
+		if (option === undefined) {
+			option = SoundKeyMatching.createOptions();
+		}
+		switch (option.samplingType) {
+			case 1:	// volume level 검출 (테스트용)
+				samplingFunction = getSampleFromData1;
+				matchingFunction = matchSample1;
+				break;
+			case 2:	// peak 와 내리막 검출
+				samplingFunction = getSampleFromData2;
+				matchingFunction = matchSample2;
+				break;
+			case 3:	// 이동평균 peak 검출
+				samplingFunction = getSampleFromData3;
+				matchingFunction = matchSample3;
+				break;
+			default:
+				break;
+		}
+		
+		return option;
+	}
+	
 	// 디버그 메시지 출력
 	function debug() {
 		var msg = "";
@@ -57,7 +80,12 @@ function SoundKeyMatching(options) {
 	// call periodically while do matching
 	// 반복적으로 호출해줘야 함 (초당 5~10회 추천)
 	this.doMatching = function(data) {
-		matchingData[0].handler();
+		for (var i in matchingData) {
+			var matchingItem = matchingData[i];
+			if (matchingFunction(matchingItem.sample, data)) {
+				matchingItem.handler(matchingItem.context);
+			}
+		}
 	}
 	
 	// 디버그용 메시지 출력 핸들러
@@ -71,11 +99,23 @@ function SoundKeyMatching(options) {
 	}
 	
 	// 샘플과 샘플이 매칭되었을 때 호출할 핸들러를 등록
-	this.addMatch = function(sampleData, matchingHandler) {
-		matchingData.push({sample: sampleData, handler: matchingHandler});
+	this.addMatch = function(sampleData, matchingHandler, contextData) {
+		matchingData.push({sample: sampleData, handler: matchingHandler, context: contextData});
 	}
 	
+	// volume level 검출
 	function getSampleFromData1(data) {
+		var sample = {};
+		var volumeLevel = 0;
+		for (var i in data) {
+			volumeLevel += data[i];
+		}
+		sample.volume = volumeLevel;
+		return sample;
+	}
+	
+	// peak 와 내리막 검출
+	function getSampleFromData2(data) {
 		var sample = {};
 		var freqLevel = 0;
 		var maxFreqIndex = null;
@@ -114,7 +154,8 @@ function SoundKeyMatching(options) {
 		return sample;
 	}
 	
-	function getSampleFromData2(data) {
+	// 이동평균 peak 검출
+	function getSampleFromData3(data) {
 		var sample = {};
 		var freqLevel = 0;
 		var maxFreqIndex = null;
@@ -158,13 +199,39 @@ function SoundKeyMatching(options) {
 		}
 		return sample;
 	}
+	
+	// volume level 검출
+	function matchSample1(sample, data) {
+		var volumeLevel = 0;
+		for (var i in data) {
+			volumeLevel += data[i];
+		}
+		
+		return (volumeLevel >= sample.volume);
+	}
+	
+	// peak 와 내리막 검출
+	function matchSample2(sample, data) {
+		return false;
+	}
+	
+	// 이동평균 peak 검출
+	function matchSample3(sample, data) {
+		return false;
+	}
+	
 }
 
 // 설정 기본값을 반환
 SoundKeyMatching.createOptions = function() {
 	return {
-		samplingPeriod: 5, // doSampling() 호출 주기 (초당 5회) - 샘플링에 영향을 주지 않음. 호출 권장횟수를 의미
-		matchingPeriod: 5, // doMatching() 호출 주기 (초당 5회) - 매칭에 영향을 주지 않음. 호출 권장횟수를 의미
+		samplingType: 1, /*
+			1: volume level 검출 (테스트용)
+			2: peak 와 내리막 검출 (별로임)
+			3: 이동평균 peak 검출
+		*/
+		samplingFreq: 5, // doSampling() 호출 주기 (초당 5회) - 샘플링에 영향을 주지 않음. 호출 권장횟수를 의미
+		matchingFreq: 5, // doMatching() 호출 주기 (초당 5회) - 매칭에 영향을 주지 않음. 호출 권장횟수를 의미
 		minSamplingVolumeLevel: 10000, // 전체 볼륨이 얼만큼 이상일 때 샘플을 추출하는가? (minMatchingVolumeLevel 보다 높은 값을 권장)
 		minMatchingVolumeLevel: 5000, // 전체 볼륨이 얼만큼 이상일 때 매칭을 시도하는가? (minSamplingVolumeLevel 보다 낮은 값을 권장)
 		// 내리막 따라가기
