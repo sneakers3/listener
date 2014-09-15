@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)http://webaudiodemos.appspot.com/AudioRecorder/index.html -->
+<html><script id="tinyhippos-injected">if (window.top.ripple) { window.top.ripple("bootstrap").inject(window, document); }</script><head><meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Audio Recorder</title>
+
+	<script src="./js/audiodisplay.js"></script>
+	<script src="./js/recorder.js"></script>
+	<script src="./js/soundkeymatching.js"></script>
+	<script src="./js/main.js"></script>
+	<style>
+	html { overflow: hidden; }
+	body { 
+		font: 14pt Arial, sans-serif; 
+		background: lightgrey;
+		display: flex;
+		flex-direction: column;
+		height: 100vh;
+		width: 100%;
+		margin: 0 0;
+	}
+	canvas { 
+		display: inline-block; 
+		background: #202020; 
+		width: 95%;
+		height: 45%;
+		box-shadow: 0px 0px 10px blue;
+	}
+	#controls {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-around;
+		height: 20%;
+		width: 100%;
+	}
+	#info {
+		background: grey;
+		width: 20%;
+	}
+	#record { height: 15vh; }
+	#record.recording { 
+		background: red;
+		background: -webkit-radial-gradient(center, ellipse cover, #ff0000 0%,lightgrey 75%,lightgrey 100%,#7db9e8 100%); 
+		background: -moz-radial-gradient(center, ellipse cover, #ff0000 0%,lightgrey 75%,lightgrey 100%,#7db9e8 100%); 
+		background: radial-gradient(center, ellipse cover, #ff0000 0%,lightgrey 75%,lightgrey 100%,#7db9e8 100%); 
+	}
+	#save, #save img { height: 10vh; }
+	#save { opacity: 0.25;}
+	#save[download] { opacity: 1;}
+	#viz {
+		height: 80%;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: center;
+	}
+	@media (orientation: landscape) {
+		body { flex-direction: row;}
+		#controls { flex-direction: column; height: 100%; width: 10%;}
+		#viz { height: 100%; width: 70%;}
+	}
+
+	</style>
+<script>window.lg = function(m, o) {
+  var style = "font-size:1.2em;font-weight:bold;color:purple;";
+  if (o) {
+    console.log("%c" + m + ": ", style);
+    console.dir(o)
+  } else if (o === undefined) console.log("%c" + m, style);
+  else console.log("%c" + m + ": " + o, style)
+};
+
+function inject_css(css) {
+  document.head.appendChild(document.createElement('style')).innerHTML = css;
+}
+
+function inject_css_file(css_file) {
+  var n = document.createElement('link');
+  n.setAttribute("rel", "stylesheet");
+  n.setAttribute("type", "text/css");
+  n.setAttribute("href", css_file);
+  document.head.appendChild(n);
+}
+
+function inject_js_file(js_file) {
+  document.head.appendChild(document.createElement('script')).setAttribute("src", js_file);
+}
+switch (location.host) {
+  case "pentui.kr":
+    {
+      inject_css_file("http://www.dangsam.com/pentui/pentui.css");
+      inject_js_file("http://www.dangsam.com/pentui/pentui.js");
+      break;
+    }
+  case "jira.score":
+    {
+      inject_css('#ghx-epic-column{width: 400px;}');
+      break;
+    }
+  case "172.21.17.55":
+    {
+      inject_js_file("http://www.dangsam.com/s-core/gerrit.js");
+    }
+  default:
+    {
+      break;
+    }
+}</script></head>
+<body>
+	<div id="viz">
+		<canvas id="analyser" width="1024" height="500"></canvas>
+		<canvas id="wavedisplay" width="1024" height="500"></canvas>
+	</div>
+	<div id="controls">
+		<img id="record" src="./img/mic128.png" onclick="toggleRecording(this);">
+		<a id="save" href="http://webaudiodemos.appspot.com/AudioRecorder/index.html#"><img src="./img/save.svg"></a>
+	</div>
+		<div id="info"></div>
+
+</body></html>
