@@ -23,7 +23,9 @@
             </tizen.css>
             <tizen.doc>
                 <tizen.page id="newsound" data-dom-cache="false" data-title="">
-                    <tizen.header id="newSoundHeader" text="New Sound" text2="" data-position="fixed" icon-id="" src=""/>
+                    <tizen.header id="newSoundHeader" text="New Sound" text2="" data-position="fixed" icon-id="" src="">
+                        <tizen.headerbutton id="backButton" text="Button" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide" ontap="backButton_ontap"/>
+                    </tizen.header>
                     <tizen.content id="content1" data-handler="false">
                         <html.textinput id="soundTitle" type="text" name="soundTitle" placeholder="Sound Title" value=""/>
                         <html.divcontrol id="soundView" style="overflow: hidden;" class="">
