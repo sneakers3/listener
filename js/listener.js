@@ -144,6 +144,7 @@ function initApp() {
     listenerApp = new ListenerApp();
     load();
     init_Audio();
+    init_Matcher();
 }
 
 app.onload = function () {
@@ -151,6 +152,14 @@ app.onload = function () {
     initApp();
 };
 
+/**
+ * Initialize for Matcher
+ */
+var matcher;
+var packages = [];
+function init_Matcher() {
+    matcher = new Matcher();
+}
 
 /**
  * Initialize for html5 audio
@@ -167,6 +176,7 @@ function init_Audio() {
 
     window.AudioContext = ( function() { return  window.webkitAudioContext || window.AudioContext || window.mozAudioContext; } )();
 }
+
 
 /**
  * Notification wrapper

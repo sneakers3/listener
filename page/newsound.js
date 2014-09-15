@@ -59,38 +59,48 @@ var canvasHeight = 256;
 var ctx;
 
 function stopRecord() {
-    javascriptNode.onaudioprocess = null;
-    if(audioStream) {
-        audioStream.stop();
-    }
-    if(sourceNode) {
-        sourceNode.disconnect();
-    }
+	var samplePackage = matcher.stopSampling();
+	console.log("matcher.stopSampling();");
+	packages.push(samplePackage);
+	console.log("package received #" + packages.length);
+	
+	// FIXME
+//    javascriptNode.onaudioprocess = null;
+//    if(audioStream) {
+//        audioStream.stop();
+//    }
+//    if(sourceNode) {
+//        sourceNode.disconnect();
+//    }
 
     isRecording = false;
 }
 
 function startRecord() {
-    ctx = $("#soundCanvas").get()[0].getContext("2d");
+	matcher.startSampling();
+	console.log("matcher.startSampling();");
 
-    try {
-        audioContext = new AudioContext();
-    } catch(e) {
-        alert('Web Audio API is not supported in this browser');
-    }
-
-    clearCanvas();
-
-    // get the input audio stream and set up the nodes
-    try {
-        navigator.getUserMedia(
-          { video: false,
-            audio: true},
-          setupAudioNodes,
-          onError);
-    } catch (e) {
-        alert('webkitGetUserMedia threw exception :' + e);
-    }
+	// FIXME
+//    ctx = $("#soundCanvas").get()[0].getContext("2d");
+//
+//    try {
+//        audioContext = new AudioContext();
+//    } catch(e) {
+//        alert('Web Audio API is not supported in this browser');
+//    }
+//
+//    clearCanvas();
+//
+//    // get the input audio stream and set up the nodes
+//    try {
+//        navigator.getUserMedia(
+//          { video: false,
+//            audio: true},
+//          setupAudioNodes,
+//          onError);
+//    } catch (e) {
+//        alert('webkitGetUserMedia threw exception :' + e);
+//    }
 
     isRecording = true;
 }
