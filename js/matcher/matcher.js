@@ -8,8 +8,9 @@ function Matcher(options) {
 	
 	var samplePackage = [];
 	
+	var samplingHandler = function() {};
 	function sampleReceived(sample) {
-		if (opt.samplingType == 1 && samplePackage.length > 0) {
+		if (/*opt.samplingType == 1 && */samplePackage.length > 0) {
 			if (sample.volume > samplePackage[0].volume) {
 				samplePackage[0] = sample;
 			}
@@ -17,8 +18,12 @@ function Matcher(options) {
 			samplePackage.push(sample);
 		}
 		console.log("sample received #" + samplePackage.length);
+		samplingHandler(sample);
 	}
 	matching.setSamplingHandler(sampleReceived);
+	this.setSamplingHandler = function(handler) {
+		samplingHandler = handler;
+	}
 	this.setDebugHandler = matching.setDebugHandler;
 	
 	var samplingTimer = null;
@@ -79,6 +84,7 @@ function Matcher(options) {
 			clearInterval(samplingTimer);
 			samplingTimer = null;
 		}
+		matching.resetSampling();
 		return samplePackage;
 	}
 	
@@ -114,4 +120,9 @@ function Matcher(options) {
 	}
 	
 	initAudio();
+}
+
+Matcher.createOptions = function() {
+	var option = SoundKeyMatching.createOptions();
+	return option;
 }
