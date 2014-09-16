@@ -61,9 +61,10 @@ function stop() {
  * @param alertMethods
  * @class
  */
-function Sound(id, title, soundData, samplePackage, alertMethods) {
+function Sound(id, title, enabled, soundData, samplePackage, alertMethods) {
     this.id = id;
     this.title = title;
+    this.enabled = enabled;
     this.soundData = soundData;
     this.samplePackage = samplePackage;
     this.alertMethods = alertMethods; // ('flash' | 'vibrate') set
@@ -91,7 +92,7 @@ function generateNewSoundID() {
 function addNewSound(title, soundData, samplePackage) {
     console.log('addNewSound');
     var newid = generateNewSoundID();
-    var newSound = new Sound(newid, title, soundData, samplePackage, ['flash', 'vibrate']);  
+    var newSound = new Sound(newid, title, true, soundData, samplePackage, ['flash', 'vibrate']);  
     listenerApp.sounds[newid] = newSound;
     saveApp();
     return newSound;
@@ -117,15 +118,8 @@ function changeSound(soundID, soundObject) {
 		console.error('changeSound soundID not found:', soundID);
 		return false;
 	}
-	if (soundObject.title) {
-		sound.title = soundObject.title;
-	}
-	if (soundObject.soundData) {
-		sound.title = soundObject.soundData;
-	}
-	if (soundObject.samplePackage) {
-		sound.title = soundObject.samplePackage;
-	}
+	soundObject = _.pick(soundObject, 'title', 'soundData', 'samplePackage', 'enabled', 'alertMethods');
+	_.extend(sound, soundObject);
 	saveApp();
 	return true;
 }
@@ -169,6 +163,8 @@ function saveApp() {
     var appdata = _.pick(listenerApp, 'sounds', 'settings');
     console.log('appdata', appdata);
     localStorage.setItem('appdata', JSON.stringify(appdata));
+    
+    startMatching();
 }
 
 /**
@@ -187,7 +183,8 @@ app.onload = function () {
 };
 
 function startMatching() {
-	var soundArray = _.toArray(listenerApp.sounds);
+	var onSounds = _.filter(listenerApp.sounds, function (sound) { return sound.enabled; });
+	var soundArray = _.toArray(onSounds);
 	var samplePackages = _.pluck(soundArray, 'samplePackage');
 	console.log('samplePackages', samplePackages);
 	console.log("startMatching(packages, sampleMatched); length", samplePackages.length);
