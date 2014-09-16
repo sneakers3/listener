@@ -35,8 +35,7 @@ _newsound_page.prototype.okButton_ontap = function(event) {
     console.log('sound title:' + this.soundTitle.val());
     var title = this.soundTitle.val();
     if ( title === '' || !samplePackage ) {
-        // FIXME
-        alert("invalid sample: " + title +" : " + samplePackage);
+        $('#center_info').popup("open");
         return;
     }
 
@@ -64,8 +63,10 @@ _newsound_page.prototype.recordButton_ontap = function(event) {
 
     if ( isRecording == false ) {
         startRecord();
+        $('#recordButton .ui-btn-text').html('Stop');
     } else {
         stopRecord();
+        $('#recordButton .ui-btn-text').html('Record');
     }
 };
 
