@@ -68,6 +68,7 @@
 	var option = Matcher.createOptions();
 	option.samplingType = 3;
 	var matcher = new Matcher(option);
+	
 	var packages = [];
 	lastSample = null;
 	function info(msg) {
@@ -100,6 +101,18 @@
 		matcher.stopMatching();
 		console.log("matcher.stopMatching();");
 	}
+	
+	function drawAnalyser() {
+		matcher.drawAnalyser(0.0, 0.5);
+		window.requestAnimationFrame( drawAnalyser );
+	}
+	
+	function initAnalyzer() {
+		matcher.setAnalyserCanvasId("wavedisplay");
+		drawAnalyser();
+	}
+	window.addEventListener('load', initAnalyzer );
+
 	</script>
 </head>
 <body>
