@@ -1,7 +1,12 @@
-function Matcher(options) {
+function Matcher(options, audioReadyHandler) {
 	window.AudioContext = window.AudioContext || window.webkitAudioContext;
 	var audioContext = new AudioContext();
 	var analyserNode = null;
+	
+	var audioReady = audioReadyHandler;
+	if (!audioReady) {
+		audioReady = function() {}
+	}
 	
 	var opt = options ? new SoundKeyMatching(options) : new SoundKeyMatching(SoundKeyMatching.createOptions());
 	var matching = opt;
@@ -29,27 +34,7 @@ function Matcher(options) {
 	var samplingTimer = null;
 	var matchingTimer = null;
 
-	var analyser = {
-		id: null,
-		context: null, 
-		width: 0,
-		height: 0
-	}
-	
-	
-	this.setAnalyserCanvasId = function(canvasId) {
-		analyser.id = canvasId;
-		var canvas = document.getElementById(analyser.id);
-		analyser.width = canvas.width;
-		analyser.height = canvas.height;
-		analyser.context = canvas.getContext("2d");
-	}
-
-	this.drawAnalyser = function(minFreqRatio, maxFreqRatio) {
-		if (!analyserContext) {
-			return false;
-		}
-		
+	this.createAnalyser = function(canvasId, minFreqRatio, maxFreqRatio) {
 		if (!minFreqRatio) minFreqRatio = 0.0;
 		if (!maxFreqRatio) maxFreqRatio = 1.0;
 		if (minFreqRatio > maxFreqRatio ||
@@ -59,6 +44,46 @@ function Matcher(options) {
 			maxFreqRatio = 1.0;
 		}
 
+		var analyser = {};
+		analyser.id = canvasId;
+		var canvas = document.getElementById(analyser.id);
+		analyser.width = canvas.width;
+		analyser.height = canvas.height;
+		analyser.context = canvas.getContext("2d");
+		analyser.minFreqRatio = minFreqRatio;
+		analyser.maxFreqRatio = maxFreqRatio;
+		return analyser;
+	}
+	
+	this.startAnalyser = function(analyser) {
+		loopingAnanlyser.push(analyser);
+		if (loopingAnanlyser.length == 1) {
+			this.drawingLoop();
+		}
+	}
+	
+	this.stopAnalyser = function(analyser) {
+		loopingAnanlyser.pop(analyser);
+	}
+	
+	var loopingAnanlyser = [];
+	
+	var that = this;
+	
+	this.drawingLoop = function() {
+		for (var i in loopingAnanlyser) {
+			var analyser = loopingAnanlyser[i];
+			that.drawAnalyser(analyser);
+		}
+		if (loopingAnanlyser.length > 0) {
+			window.requestAnimationFrame(that.drawingLoop);
+		}
+	}
+
+	this.drawAnalyser = function(analyser) {
+		if (!analyser || !analyser.context) {
+			return false;
+		}
 		// clear canvas
         analyser.context.clearRect(0, 0, analyser.width, analyser.height);
 		
@@ -72,8 +97,8 @@ function Matcher(options) {
         analyser.context.fillStyle = '#F6D565';
         //analyserContext.lineCap = 'round';
         //var multiplier = analyserNode.frequencyBinCount / numBars;
-		var regionStart = Math.floor(analyserNode.frequencyBinCount * minFreqRatio);
-		var regionEnd = Math.floor(analyserNode.frequencyBinCount * (minFreqRatio + maxFreqRatio));
+		var regionStart = Math.floor(analyserNode.frequencyBinCount * analyser.minFreqRatio);
+		var regionEnd = Math.floor(analyserNode.frequencyBinCount * (analyser.minFreqRatio + analyser.maxFreqRatio));
 		var multiplier = (regionEnd - regionStart) / numBars;
 
         // Draw rectangle for each frequency bin.
@@ -116,6 +141,8 @@ function Matcher(options) {
 		zeroGain.gain.value = 0.0;
 		inputPoint.connect( zeroGain );
 		zeroGain.connect( audioContext.destination );
+		
+		audioReady();
 	}
 
 	function initAudio() {

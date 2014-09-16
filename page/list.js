@@ -31,7 +31,7 @@ function updateSoundList() {
 	startMatching();
 }
 
-function matchHandler(soundID) {
+function matchHandler(event, soundID) {
 	console.log('list matchHandler', soundID);
 	// TODO update status of sounds
 }
