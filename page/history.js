@@ -10,14 +10,35 @@ function addNewAlert() {
     
 }
 
-function historyMatchHandler(event, soundID) {
-	console.log('history matchHandler', soundID);
+function historyMatchHandler( event, soundID ) {
+	console.log( 'history matchHandler', soundID );
+	var sound = getSoundByID( soundID );
+	
+	var date = new Date;
+	// TODO
+	
+	
+	// check history list
+	// check time stamp 
+	// push history list
+	
+	
     var noti = {
-            id : soundID,
-            message : "test" + soundID,
-            vibration : true
+            id : sound.id,
+            message : sound.title,
+            vibration : true // FIXME: sound..alertMethods[0], [1] check
     }
     notification(noti);
+
+    updateHistoryList(sound)
+}
+
+function updateHistoryList(sound) {
+	// TODO:
+	var historyListView = $('#alertList');
+	var li = '<li><img src="../res/thumbnail.jpg" alt="icon" class="ui-li-bigicon">' + sound.title + '<span class="ui-li-text-sub">' + 'Sub text' + '</span></li>';
+	historyListView.append(li).listview('refresh');
+
 }
 
 /**

@@ -70,17 +70,6 @@ function Sound(id, title, soundData, samplePackage, alertMethods) {
 }
 
 /**
- * Alert model
- * @param soundID
- * @param timestamp
- * @class
- */
-function Alert(soundID, timestamp) {
-    this.soundID = soundID;
-    this.timestamp = timestamp;
-}
-
-/**
  * 
  * @returns {Number}
  */
@@ -349,20 +338,33 @@ function isDevice() {
     }
 }
 
+/**
+ * Alert model
+ * @param soundID
+ * @param timestamp
+ * @class
+ */
+function Alert(soundID, timestamp) {
+    this.soundID = soundID;
+    this.timestamp = timestamp;
+}
 
-//FIXME
-///**
-//* Initialize for html5 audio
-//*/
-//function init_Audio() {
-//  navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia );
-//
-//  window.requestAnimFrame = ( function() { 
-//      return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame ||
-//              function(callback, element) { 
-//                  window.setTimeout(callback, 1000 / 60);
-//              };
-//  })();
-//
-//  window.AudioContext = ( function() { return  window.webkitAudioContext || window.AudioContext || window.mozAudioContext; } )();
-//}
+function History() {
+	// TODO
+}
+
+function addNewHistory(soundID, timestamp) {
+	// TODO
+    listenerApp.history.push(newSound);
+}
+
+function getHistoryByID(soundID) {
+	// TODO
+	for (var i in listenerApp.soundList ) {
+		var sound = listenerApp.soundList[i];
+		if (sound.id == soundID) {
+			return sound;
+		}
+	}
+	return null;
+}
