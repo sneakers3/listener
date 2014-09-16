@@ -90,5 +90,13 @@ _list_page.prototype.onpageinit = function(event) {
 			updateSoundList();
 		}
 	});
+	$('#soundDialogDeleteButton').on('click', function () {
+		console.log('soundDialogOkButton click');
+		var soundID = parseInt($('#soundDialogID').val(), 10);
+		var result = deleteSound(soundID);
+		if (result) {
+			updateSoundList();
+		}
+	});
 };
 

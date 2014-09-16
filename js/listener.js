@@ -117,6 +117,21 @@ function changeSound(soundID, soundObject) {
 }
 
 /**
+ * Delete sound
+ */
+function deleteSound(soundID) {
+	for (var i in listenerApp.soundList ) {
+		var sound = listenerApp.soundList[i];
+		if (sound.id == soundID) {
+			delete listenerApp.soundList[i];
+			return true;
+		}
+	}
+	console.error('changeSound soundID not found:', soundID);
+	return false;
+}
+
+/**
  * Start listening
  */
 function start() {

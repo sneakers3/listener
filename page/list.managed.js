@@ -24,7 +24,7 @@ _list_page.prototype.settingsButton = undefined;
 _list_page.prototype.content = undefined;
 _list_page.prototype.soundListView = undefined;
 _list_page.prototype.startButton = undefined;
-_list_page.prototype.htmlblock1 = undefined;
+_list_page.prototype.soundDialogBlock = undefined;
 
 // default widget event handler
 _list_page.prototype.newSoundButton_ontap = function(event) {};
@@ -73,7 +73,7 @@ _list_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, manage
 		/**
 		 * @type jQueryObject
 		 */
-		_list_page.prototype.htmlblock1 = $("#list #htmlblock1");
+		_list_page.prototype.soundDialogBlock = $("#list #soundDialogBlock");
 
 		// bind widget event handler
 		_list_page.prototype.newSoundButton.bind("tap", function(event) { _list_page.prototype.newSoundButton_ontap(event); });
