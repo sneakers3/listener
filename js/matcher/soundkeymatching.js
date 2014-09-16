@@ -33,6 +33,8 @@ function SoundKeyMatching(options) {
 		info.weightedLevel = info.volumeLevel;
 		
 		sampleData = samplingFunction(data, info.volumeLevel);
+		
+		// 정상과 계곡의 차이가 심할 수록 가중치를 둬서 샘플링되게 해준다.
 		var lastFreq = 0;
 		var lastLevel = 0;
 		var maxLevel = 0;
@@ -51,6 +53,7 @@ function SoundKeyMatching(options) {
 				maxLevel = level;
 			}
 		}
+		sampleData.volume = info.weightedLevel;
 		
 		//if (info.volumeLevel > info.maxLevel) {
 		if (info.weightedLevel > info.maxWeightedLevel) {
