@@ -188,7 +188,7 @@ function startMatching() {
 	var samplePackages = _.pluck(listenerApp.soundList, 'samplePackage');
 	console.log('samplePackages', samplePackages);
 	console.log("startMatching(packages, sampleMatched); length", samplePackages.length);
-	matcher.startMatching(listenerApp.soundList, sampleMatcheHandler);
+	matcher.startMatching(samplePackages, sampleMatcheHandler);
 }
 function stopMatching() {
 	console.log("stopMatching();");
