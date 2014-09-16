@@ -7,28 +7,18 @@
  * Add new alert to history
  */
 function addNewAlert() {
-	
+    
 }
 
+var num = 1;
 function test() {
-	
-	// FIXME::
-	$('#notification').notification('open').on("click", function(){alert('open')});
-	//$('#notification2').notification('open');
-//	$( "div.test" ).on("pagecreate", function () {
-//		$('#noti-demo').on('vmouseup', function ( e ) {
-//			$('#notification').notification('open');
-//		});
-//
-//		$('#noti-icon1').on('vclick', function ( e ) {
-//			$('#notification').notification('icon', './test/icon02.png');
-//		});
-//
-//		$('#noti-icon2').on('vclick', function ( e ) {
-//			$('#notification').notification('icon', './test/icon01.png');
-//		});
-//
-//	});
+    num = num+1;
+    var noti = {
+            id : num,
+            message : "test" + num,
+            vibration : true
+    }
+    notification(noti);
 }
 
 /**
@@ -37,8 +27,8 @@ function test() {
  * @returns {Boolean}
 */
 _history_page.prototype.onpagebeforehide = function(event) {
-	console.log('history page before hide');
-	stop();
+    console.log('history page before hide');
+    stop();
 };
 
 /**
@@ -47,8 +37,8 @@ _history_page.prototype.onpagebeforehide = function(event) {
  * @returns {Boolean}
 */
 _history_page.prototype.onpagebeforeshow = function(event) {
-	console.log('history page before show');
-	start();
+    console.log('history page before show');
+    start();
 };
 
 /**
@@ -57,7 +47,7 @@ _history_page.prototype.onpagebeforeshow = function(event) {
  * @returns {Boolean}
 */
 _history_page.prototype.backButton_ontap = function(event) {
-	pageManager.changePage('list');
+    pageManager.changePage('list');
 };
 
 /**
@@ -66,6 +56,6 @@ _history_page.prototype.backButton_ontap = function(event) {
  * @returns {Boolean}
 */
 _history_page.prototype.trashButton_ontap = function(event) {
-	// TODO
+    // TODO
 };
 

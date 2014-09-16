@@ -173,44 +173,45 @@ function init_Matcher() {
     matcher = new Matcher();
 }
 
-// FIXME
-///**
-// * Initialize for html5 audio
-// */
-//function init_Audio() {
-//    navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia );
-//
-//    window.requestAnimFrame = ( function() { 
-//        return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame ||
-//                function(callback, element) { 
-//                    window.setTimeout(callback, 1000 / 60);
-//                };
-//    })();
-//
-//    window.AudioContext = ( function() { return  window.webkitAudioContext || window.AudioContext || window.mozAudioContext; } )();
-//}
-
-
 /**
  * Notification wrapper
+ * 
+ * notification {
+ *     id,
+ *  message,
+ *  vibration,
+ *  ledColor,
+ * }
  */
-function notification(msg) {
+function notification(noti) {
     try {
         if ( isDevice() == true ) {
             var notificationDict = {
-                    content : msg,
-                    iconPath : "images/image1.jpg", // FIXME
-                    soundPath : "music/Over the horizon.mp3", // FIXME
-                    vibration : true,
-                    ledColor : "#FFFF00", 
+                    content : noti.message,
+                    iconPath : "../res/warning.png",
+                    soundPath : "",
+                    vibration : noti.vibration, // true,
+                    ledColor : noti.ledColor,   // "#FFFF00", 
                     ledOnPeriod: 1000,
                     ledOffPeriod : 500 };
 
-            var notification = new tizen.StatusNotification("SIMPLE", "Listener notification", notificationDict);
+            var notification = new tizen.StatusNotification("SIMPLE", "Listener", notificationDict);
             tizen.notification.post(notification);
         } else {
-            // FIXME
-            alert("Listener Notification: " + msg);
+            var notification = '<div data-role="notification" id="'+ noti.id + '" data-type="ticker"><img src="../res/warning.png"><p>' + noti.message + '</p></div>';
+            $('#history').append(notification);
+
+            $('#'+noti.id).notification().on("click", function() { 
+                    $('#'+noti.id).remove();
+                    // FIXME: vibration and flash
+                    if ( noti.vibration == true ) {
+                        vibrate(false);
+                    }
+                });
+            $('#'+noti.id).notification('open');
+            if ( noti.vibration == true ) {
+                vibrate(true);
+            }
         }
     } catch (e) {
         console.log (e.name + ": " + e.message);
@@ -246,7 +247,7 @@ function vibrate(flag) {
                 clearInterval(timeID);
                 timeID = null;
             }
-            timeID = setInterval( function() { require('ripple/ui/plugins/goodVibrations').shakeDevice(4); }, 500);
+            timeID = setInterval( function() { parent.require('ripple/ui/plugins/goodVibrations').shakeDevice(4); }, 500);
             console.log('simulator vibrate on');
         } else {
             if ( timeID != null ) {
@@ -301,3 +302,20 @@ function isDevice() {
     }
 }
 
+
+//FIXME
+///**
+//* Initialize for html5 audio
+//*/
+//function init_Audio() {
+//  navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia );
+//
+//  window.requestAnimFrame = ( function() { 
+//      return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame ||
+//              function(callback, element) { 
+//                  window.setTimeout(callback, 1000 / 60);
+//              };
+//  })();
+//
+//  window.AudioContext = ( function() { return  window.webkitAudioContext || window.AudioContext || window.mozAudioContext; } )();
+//}
