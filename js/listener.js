@@ -151,9 +151,12 @@ function deleteSound(soundID) {
  */
 function loadApp() {
     console.log('load');
-    console.log('get appdata', JSON.parse(localStorage.appdata));
+    console.log('get appdata', localStorage.appdata);
     console.log('before load listenerApp', listenerApp)
-    _.extend(listenerApp, JSON.parse(localStorage.appdata));
+    if (localStorage.appdata) {
+        _.extend(listenerApp, JSON.parse(localStorage.appdata));
+    	
+    }
     console.log('after load listenerApp', listenerApp)
 }
 
