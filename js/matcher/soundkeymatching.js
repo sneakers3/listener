@@ -300,7 +300,7 @@ function SoundKeyMatching(options) {
 // 설정 기본값을 반환
 SoundKeyMatching.createOptions = function() {
 	return {
-		samplingType: 1, /*
+		samplingType: 3, /*
 			1: volume level 검출 (사용안함)
 			2: peak 와 내리막 검출 (사용안함)
 			3: peak/valley 검출 (이걸 사용함)

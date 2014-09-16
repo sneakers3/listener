@@ -25,6 +25,8 @@ function historyMatchHandler( event, soundID ) {
 		if ( diffMin < 1) {
 			// ignore match
 			return;
+		} else {
+			history.timestamp = currentDate;
 		}
 	}
 
@@ -34,23 +36,33 @@ function historyMatchHandler( event, soundID ) {
 	
 	// push history list
 	
-	
-//    var noti = {
-//            id : soundID,
-//            message : sound.title,
-//            vibration : true // FIXME: sound..alertMethods[0], [1] check
-//    }
-//    notification(noti);
-//
-//    updateHistoryList(sound)
+	var sound = getSoundByID(soundID);
+    var noti = {
+            id : sound.id,
+            message : sound.title,
+            vibration : true // FIXME: sound..alertMethods[0], [1] check
+    }
+    notification(noti);
+
+    updateHistoryList()
 }
 
-function updateHistoryList(sound) {
-	// TODO:
+function updateHistoryList() {
 	var historyListView = $('#alertList');
-	var li = '<li><img src="../res/thumbnail.jpg" alt="icon" class="ui-li-bigicon">' + sound.title + '<span class="ui-li-text-sub">' + 'Sub text' + '</span></li>';
-	historyListView.append(li).listview('refresh');
+	historyListView.children().remove();
+	
+	var currentDate = new Date;
+	
+	for (var i in listenerApp.history) {
+		var history = listenerApp.history[i];
+		var sound = getSoundByID(history.soundID);
 
+		var diffMs = currentDate - history.timestamp;
+		var diffMin =  Math.round(((diffMs % 86400000) % 3600000) / 60000);
+		
+		var li = '<li><img src="../res/thumbnail.jpg" alt="icon" class="ui-li-bigicon">' + sound.title + '<span class="ui-li-text-sub">' + diffMin + '분전' + '</span></li>';
+		historyListView.append(li).listview('refresh');
+	}
 }
 
 /**
