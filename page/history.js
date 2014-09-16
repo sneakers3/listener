@@ -10,17 +10,6 @@ function addNewAlert() {
     
 }
 
-var num = 1;
-function test() {
-    num = num+1;
-    var noti = {
-            id : num,
-            message : "test" + num,
-            vibration : true
-    }
-    notification(noti);
-}
-
 function historyMatchHandler(event, soundID) {
 	console.log('history matchHandler', soundID);
     var noti = {
