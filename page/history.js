@@ -12,25 +12,37 @@ function addNewAlert() {
 
 function historyMatchHandler( event, soundID ) {
 	console.log( 'history matchHandler', soundID );
-	var sound = getSoundByID( soundID );
+	var currentDate = new Date;
+	var history = getHistoryByID( soundID );
+
+	// check history list
+	// check time stamp 
+	if (!history) {
+		addNewHistory(soundID, currentDate);
+	} else {
+		var diffMs = currentDate - history.timestamp;
+		var diffMin =  Math.round(((diffMs % 86400000) % 3600000) / 60000);
+		if ( diffMin < 1) {
+			// ignore match
+			return;
+		}
+	}
+
 	
-	var date = new Date;
 	// TODO
 	
 	
-	// check history list
-	// check time stamp 
 	// push history list
 	
 	
-    var noti = {
-            id : sound.id,
-            message : sound.title,
-            vibration : true // FIXME: sound..alertMethods[0], [1] check
-    }
-    notification(noti);
-
-    updateHistoryList(sound)
+//    var noti = {
+//            id : soundID,
+//            message : sound.title,
+//            vibration : true // FIXME: sound..alertMethods[0], [1] check
+//    }
+//    notification(noti);
+//
+//    updateHistoryList(sound)
 }
 
 function updateHistoryList(sound) {

@@ -6,13 +6,13 @@ var isRecording = false;
 var samplePackage;
 var analyser;
 function startRecord() {
-	matcher.startSampling();
-	console.log("matcher.startSampling();");
-	isRecording = true;
-
 	// draw canvas
 	analyser = matcher.createAnalyser("soundCanvas", 0.0, 0.5);
 	matcher.startAnalyser(analyser);
+
+	matcher.startSampling();
+	console.log("matcher.startSampling();");
+	isRecording = true;
 }
 
 function stopRecord() {

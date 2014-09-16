@@ -301,9 +301,9 @@ function SoundKeyMatching(options) {
 SoundKeyMatching.createOptions = function() {
 	return {
 		samplingType: 1, /*
-			1: volume level 검출 (테스트용)
-			2: peak 와 내리막 검출 (별로임)
-			3: 이동평균 peak 검출
+			1: volume level 검출 (사용안함)
+			2: peak 와 내리막 검출 (사용안함)
+			3: peak/valley 검출 (이걸 사용함)
 		*/
 		samplingFreq: 5, // doSampling() 호출 주기 (초당 5회) - 샘플링에 영향을 주지 않음. 호출 권장횟수를 의미
 		matchingFreq: 5, // doMatching() 호출 주기 (초당 5회) - 매칭에 영향을 주지 않음. 호출 권장횟수를 의미
@@ -323,6 +323,6 @@ SoundKeyMatching.createOptions = function() {
 
 // 빈 샘플 반환
 SoundKeyMatching.createEmptySample = function() {
-	return {size: 0};
+	return {size: 0, type: "sample"};
 }
 

@@ -24,6 +24,7 @@ function Matcher(options, audioReadyHandler) {
 		}
 		console.log("sample received #" + samplePackage.length);
 		samplingHandler(sample);
+		lastSample = sample;
 	}
 	matching.setSamplingHandler(sampleReceived);
 	this.setSamplingHandler = function(handler) {
@@ -92,6 +93,8 @@ function Matcher(options, audioReadyHandler) {
 		}
 	}
 
+	var lastSample = SoundKeyMatching.createEmptySample();
+	
 	this.drawAnalyser = function(analyser) {
 		if (!analyser || !analyser.context) {
 			return false;
@@ -113,7 +116,12 @@ function Matcher(options, audioReadyHandler) {
 		var regionEnd = Math.floor(analyserNode.frequencyBinCount * (analyser.minFreqRatio + analyser.maxFreqRatio));
 		var multiplier = (regionEnd - regionStart) / numBars;
 
+		var SAMPLE_DRAW_TYPE = 2;	// 1: bar, 2: line
         // Draw rectangle for each frequency bin.
+		var firstPath = true;
+		if (SAMPLE_DRAW_TYPE === 2) {
+			analyser.context.beginPath();
+		}
         for (var i = 0; i < numBars; ++i) {
             var magnitude = 0;
             var offset1 = regionStart + Math.floor( i * multiplier );
@@ -122,17 +130,32 @@ function Matcher(options, audioReadyHandler) {
 			for (var j = 0; j < offset2; j++) {
                 magnitude += freqByteData[offset1 + j];
 				// 범위 안에 샘플 peak 이 존재하면 그리자.
-			/*
+				
 				if (lastSample && lastSample[offset1 + j]) {
-					analyser.context.fillStyle = "#FFFFFF";
-					analyser.context.fillRect(i * SPACING, analyser.height, BAR_WIDTH, -lastSample[offset1 + j]);
+					if (SAMPLE_DRAW_TYPE === 1) { // 막대 그래프
+						analyser.context.fillStyle = "#FFFFFF";
+						analyser.context.fillRect(i * SPACING, analyser.height, BAR_WIDTH, -lastSample[offset1 + j]);
+					} else if (SAMPLE_DRAW_TYPE === 2) { // 꺽은선 그래프
+						if (firstPath) {
+							analyser.context.moveTo(i * SPACING, analyser.height - lastSample[offset1 + j]);
+							firstPath = false;
+						} else {
+							analyser.context.lineTo(i * SPACING, analyser.height - lastSample[offset1 + j]);
+						}
+					} 
 				}
-			*/
 			}
+					
 			magnitude = magnitude / offset2;
             analyser.context.fillStyle = "hsl( " + Math.round((i*360)/numBars) + ", 100%, 50%)";
             analyser.context.fillRect(i * SPACING, analyser.height, BAR_WIDTH, -magnitude);
         }
+		if (SAMPLE_DRAW_TYPE === 2) {
+			//analyser.context.lineWidth = 10;
+			// set line color
+			analyser.context.strokeStyle = '#FFFFFF';
+			analyser.context.stroke();
+		}
 		
 		return true;
 	}
@@ -232,6 +255,7 @@ function Matcher(options, audioReadyHandler) {
 			samplingTimer = null;
 		}
 		matching.resetSampling();
+		lastSample = SoundKeyMatching.createEmptySample();
 		return samplePackage;
 	}
 	
