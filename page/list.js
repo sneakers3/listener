@@ -28,6 +28,7 @@ function updateSoundList() {
 		li.on("taphold", getHoldHandler(sound));
 		soundListView.append(li).listview('refresh');
 	}
+	startMatching();
 }
 
 /**

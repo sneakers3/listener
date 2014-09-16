@@ -14,7 +14,7 @@ function startRecord() {
 function stopRecord() {
 	samplePackage = matcher.stopSampling();
 	console.log("matcher.stopSampling();");
-	console.log("package received #" + samplePackage.length);
+	console.log("package received #" + samplePackage.length, samplePackage);
     isRecording = false;
 }
 

@@ -180,12 +180,28 @@ app.onload = function () {
     initApp();
 };
 
+function sampleMatcheHandler(sampleIndex) {
+	console.log("sample matched index:", sampleIndex, ", sound:", listenerApp.soundList[sampleIndex]);
+}
+
+function startMatching() {
+	var samplePackages = _.pluck(listenerApp.soundList, 'samplePackage');
+	console.log('samplePackages', samplePackages);
+	console.log("startMatching(packages, sampleMatched); length", samplePackages.length);
+	matcher.startMatching(listenerApp.soundList, sampleMatcheHandler);
+}
+function stopMatching() {
+	console.log("stopMatching();");
+	matcher.stopMatching();
+}
+
 /**
  * Initialize for Matcher
  */
 var matcher;
 function init_Matcher() {
     matcher = new Matcher();
+    startMatching();
 }
 
 /**
