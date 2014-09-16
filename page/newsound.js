@@ -34,7 +34,7 @@ _newsound_page.prototype.okButton_ontap = function(event) {
     }
 
     addNewSound(title, '', samplePackage);
-    pageManager.changePage('list', {});
+    pageManager.changePage('list');
 };
 
 /**

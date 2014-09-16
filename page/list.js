@@ -6,25 +6,14 @@
 
 var editPopup;
 
-function updateSoundList(soundListView) {
+function updateSoundList() {
+	var soundListView = $('#soundListView');
 	soundListView.children().remove();
 	for (var i in listenerApp.soundList) {
 		var sound = listenerApp.soundList[i];
-		var li = $('<li>').text(sound.title);
+		var li = $('<li>').text(sound.title).attr('sound-id', sound.id);
 		soundListView.append(li);
 	}
-}
-
-function initEditPopup(content) {
-	// Add sound edit popup and initialize it
-	editPopup = $('<div data-role="popup" id="soundDialog"><form>Edit Sound</form></div>');
-	content.append(editPopup);
-	editPopup.popup();
-
-//	editPopup.load('./editPopup.html', '', function () {
-//		console.log('load editPopup', arguments);
-//		editPopup.popup();
-//	});
 }
 
 /**
@@ -51,7 +40,7 @@ _list_page.prototype.newSoundButton_ontap = function(event) {
  * @returns {Boolean}
 */
 _list_page.prototype.onpagebeforeshow = function(event) {
-	updateSoundList(this.soundListView);
+	updateSoundList();
 };
 
 /**
@@ -79,20 +68,16 @@ _list_page.prototype.soundListView_ontap = function(event) {
 */
 _list_page.prototype.soundListView_ontaphold = function(event) {
 	console.log('soundListView taphold');
+	var soundID = $(event.target).attr('sound-id');
+	var sound = getSoundByID(soundID);
+	if (!sound) {
+		// TOFIX
+		alert('Cannot find sound id: ' + soundID);
+		return;
+	}
+	$('#soundDialogID').val(soundID);
+	$('#soundDialogTitleInput').val(sound.title);
 	$('#soundDialog').popup('open');
-//
-//	var form = editPopup.children('form');
-//	var playButton = $('<input value="Play" type="button">');
-//	playButton.button({show: true});
-////	playButton.button('option', );
-////	playButton.button('enable');
-////	playButton.button('refresh');
-////	var titleInput = $('<input data-inline="true" value="" type="text">');
-////	titleInput.textinput();
-//	var delButton = $('<input data-icon="delete" data-inline="true" data-iconpos="notext" value="Icon only" type="button">');
-//	delButton.button();
-////	form.append(playButton, titleInput, delButton);
-//	form.append(playButton, delButton);
 };
 
 /**
@@ -101,6 +86,14 @@ _list_page.prototype.soundListView_ontaphold = function(event) {
  * @returns {Boolean}
 */
 _list_page.prototype.onpageinit = function(event) {
-//	initEditPopup(this.content);
+	$('#soundDialogOKButton').on('click', function () {
+		console.log('soundDialogOkButton click');
+		var soundID = parseInt($('#soundDialogID').val(), 10);
+		var newTitle = $('#soundDialogTitleInput').val();
+		var result = changeSound(soundID, {title: newTitle});
+		if (result) {
+			updateSoundList();
+		}
+	});
 };
 

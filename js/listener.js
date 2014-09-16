@@ -84,11 +84,36 @@ function addNewSound(title, soundData, samplePackage) {
     return newSound;
 }
 
+function getSoundByID(soundID) {
+	for (var i in listenerApp.soundList ) {
+		var sound = listenerApp.soundList[i];
+		if (sound.id == soundID) {
+			return sound;
+		}
+	}
+	return null;
+}
+
 /**
  * Change sound properties
  */
-function changeSound() {
-    // TODO
+function changeSound(soundID, soundObject) {
+	var sound = getSoundByID(soundID);
+	console.log('changeSound', sound, soundObject);
+	if (!sound) {
+		console.error('changeSound soundID not found:', soundID);
+		return false;
+	}
+	if (soundObject.title) {
+		sound.title = soundObject.title;
+	}
+	if (soundObject.soundData) {
+		sound.title = soundObject.soundData;
+	}
+	if (soundObject.samplePackage) {
+		sound.title = soundObject.samplePackage;
+	}
+	return true;
 }
 
 /**

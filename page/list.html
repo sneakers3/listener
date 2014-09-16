@@ -21,7 +21,19 @@ Do not hand edit this file.
         <div data-role="button" data-corners="false" id="startButton" data-style="" data-icon="" data-inline="false">Start</div>
         <div id="htmlblock1" class="">
           <!--HtmlCodeBlock-Start[#htmlblock1]-->
-					 <div data-role="popup" id="soundDialog"> <form> Edit Sound <input data-inline="true" value="Play" type="button"><input data-inline="true" value="" type="text"> </form></div>
+		<div id="soundDialog" data-role="popup">
+			<div class="ui-popup-title">
+				<h1>Edit Sound</h1>
+			</div>
+			<div class="ui-popup-text">
+				<input id='soundDialogID' value="" type="hidden">
+				<input data-inline="true" value="Play" type="button"><input id='soundDialogTitleInput' data-inline="true" value="" type="text"><input data-inline="true" value="Delete" type="button">
+			</div>
+			<div class="ui-popup-button-bg">
+				<a id='soundDialogOKButton' data-role="button" data-rel="back" data-inline="true">OK</a>
+				<a id='soundDialogCancelButton' data-role="button" data-inline="true">Cancel</a>
+			</div>
+		</div>
           <!--HtmlCodeBlock-End[#htmlblock1]-->
         </div>
       </div>
