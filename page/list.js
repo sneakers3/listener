@@ -6,13 +6,27 @@
 
 var editPopup;
 
+function getHoldHandler(sound) {
+	return function (event) {
+		console.log('li taphold', sound);
+		$('#soundDialogID').val(sound.id);
+		$('#soundDialogTitleInput').val(sound.title);
+		$('#soundDialog').popup('open');
+	};
+}
+
 function updateSoundList() {
 	var soundListView = $('#soundListView');
 	soundListView.children().remove();
 	for (var i in listenerApp.soundList) {
 		var sound = listenerApp.soundList[i];
-		var li = $('<li>').text(sound.title).attr('sound-id', sound.id);
-		soundListView.append(li);
+		console.log('add sound:', sound);
+		
+		var li = $('<li><img src="../res/thumbnail.jpg" class="ui-li-bigicon"><span class="ui-li-text-main"></span><div data-role="toggleswitch"/></div></li>');
+		li.children('.ui-li-text-main').text(sound.title);
+		li.attr('sound-id', sound.id);
+		li.on("taphold", getHoldHandler(sound));
+		soundListView.append(li).listview('refresh');
 	}
 }
 
@@ -59,25 +73,6 @@ _list_page.prototype.settingsButton_ontap = function(event) {
 */
 _list_page.prototype.soundListView_ontap = function(event) {
 	console.log('soundListView tap');
-};
-
-/**
- * @param {Object} event
- * @base _list_page
- * @returns {Boolean}
-*/
-_list_page.prototype.soundListView_ontaphold = function(event) {
-	console.log('soundListView taphold');
-	var soundID = $(event.target).attr('sound-id');
-	var sound = getSoundByID(soundID);
-	if (!sound) {
-		// TOFIX
-		alert('Cannot find sound id: ' + soundID);
-		return;
-	}
-	$('#soundDialogID').val(soundID);
-	$('#soundDialogTitleInput').val(sound.title);
-	$('#soundDialog').popup('open');
 };
 
 /**

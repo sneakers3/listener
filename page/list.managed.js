@@ -24,12 +24,12 @@ _list_page.prototype.settingsButton = undefined;
 _list_page.prototype.content = undefined;
 _list_page.prototype.soundListView = undefined;
 _list_page.prototype.startButton = undefined;
+_list_page.prototype.htmlblock1 = undefined;
 
 // default widget event handler
 _list_page.prototype.newSoundButton_ontap = function(event) {};
 _list_page.prototype.settingsButton_ontap = function(event) {};
 _list_page.prototype.soundListView_ontap = function(event) {};
-_list_page.prototype.soundListView_ontaphold = function(event) {};
 _list_page.prototype.startButton_ontap = function(event) {};
 
 _list_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, managedCssPath) {
@@ -70,11 +70,15 @@ _list_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, manage
 		 */
 		_list_page.prototype.startButton = $("#list #startButton");
 
+		/**
+		 * @type jQueryObject
+		 */
+		_list_page.prototype.htmlblock1 = $("#list #htmlblock1");
+
 		// bind widget event handler
 		_list_page.prototype.newSoundButton.bind("tap", function(event) { _list_page.prototype.newSoundButton_ontap(event); });
 		_list_page.prototype.settingsButton.bind("tap", function(event) { _list_page.prototype.settingsButton_ontap(event); });
 		_list_page.prototype.soundListView.bind("tap", function(event) { _list_page.prototype.soundListView_ontap(event); });
-		_list_page.prototype.soundListView.bind("taphold", function(event) { _list_page.prototype.soundListView_ontaphold(event); });
 		_list_page.prototype.startButton.bind("tap", function(event) { _list_page.prototype.startButton_ontap(event); });
 
 	}, isStartPage);
