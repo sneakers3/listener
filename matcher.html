@@ -67,7 +67,7 @@
 	<script>
 	var option = Matcher.createOptions();
 	option.samplingType = 3;
-	var matcher = new Matcher(option);
+	var matcher = new Matcher(option, audioReady);
 	
 	var packages = [];
 	lastSample = null;
@@ -102,16 +102,11 @@
 		console.log("matcher.stopMatching();");
 	}
 	
-	function drawAnalyser() {
-		matcher.drawAnalyser(0.0, 0.5);
-		window.requestAnimationFrame( drawAnalyser );
+	var analyser = null;
+	function audioReady() {
+		analyser = matcher.createAnalyser("wavedisplay", 0.0, 0.5);
+		matcher.startAnalyser(analyser);
 	}
-	
-	function initAnalyzer() {
-		matcher.setAnalyserCanvasId("wavedisplay");
-		drawAnalyser();
-	}
-	window.addEventListener('load', initAnalyzer );
 
 	</script>
 </head>
