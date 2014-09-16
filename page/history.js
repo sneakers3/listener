@@ -32,10 +32,7 @@ function historyMatchHandler( event, soundID ) {
 
 	
 	// TODO
-	
-	
 	// push history list
-	
 	var sound = getSoundByID(soundID);
     var noti = {
             id : sound.id,
@@ -82,6 +79,7 @@ _history_page.prototype.onpagebeforehide = function(event) {
  * @returns {Boolean}
 */
 _history_page.prototype.onpagebeforeshow = function(event) {
+	updateHistoryList()
     console.log('history page before show');
     start();
 
@@ -103,6 +101,17 @@ _history_page.prototype.backButton_ontap = function(event) {
  * @returns {Boolean}
 */
 _history_page.prototype.trashButton_ontap = function(event) {
-    // TODO
+	var historyListView = $('#alertList');
+	historyListView.children().remove();
+	listenerApp.history = [];
+};
+
+/**
+ * @param {Object} event
+ * @base _history_page
+ * @returns {Boolean}
+*/
+_history_page.prototype.onpageinit = function(event) {
+	updateHistoryList();
 };
 
