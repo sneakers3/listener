@@ -104,6 +104,7 @@ function addNewSound(title, soundData, samplePackage) {
     var newid = generateNewSoundID();
     var newSound = new Sound(newid, title, soundData, samplePackage, ['flash', 'vibrate']);  
     listenerApp.soundList.push(newSound);
+    saveApp();
     return newSound;
 }
 
@@ -136,6 +137,7 @@ function changeSound(soundID, soundObject) {
 	if (soundObject.samplePackage) {
 		sound.title = soundObject.samplePackage;
 	}
+	saveApp();
 	return true;
 }
 
@@ -155,20 +157,26 @@ function deleteSound(soundID) {
 }
 
 /**
- * load saved sounds
+ * load saved app data (sounds, settings, etc)
  */
-function loadSounds() {
-    // TODO
+function loadApp() {
     console.log('load');
-    localStorage
+    console.log('get appdata', JSON.parse(localStorage.appdata));
+    console.log('before load listenerApp', listenerApp)
+    _.extend(listenerApp, JSON.parse(localStorage.appdata));
+    console.log('after load listenerApp', listenerApp)
 }
 
 /**
- * save sounds
+ * save app data (sounds, settings, etc)
+ * 
+ * call this when something that should be saved is changed
  */
-function saveSounds() {
-    // TODO
+function saveApp() {
     console.log('save');
+    var appdata = _.pick(listenerApp, 'soundList', 'settings');
+    console.log('appdata', appdata);
+    localStorage.setItem('appdata', JSON.stringify(appdata));
 }
 
 /**
@@ -177,7 +185,7 @@ function saveSounds() {
 function initApp() {
     console.log('init');
     listenerApp = new ListenerApp();
-    loadSounds();
+    loadApp();
     init_Matcher();
 }
 
