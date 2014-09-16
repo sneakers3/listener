@@ -17,7 +17,7 @@
                 <tizen.selector name="#header1 h1" partId="header1"/>
             </tizen.css>
             <tizen.doc>
-                <tizen.page id="list" data-dom-cache="false" data-title="" onpageinit="onpageinit" onpagebeforehide="onpagebeforehide" onpagebeforeshow="onpagebeforeshow">
+                <tizen.page id="list" data-dom-cache="false" data-title="" onpageinit="onpageinit" onpagebeforehide="onpagebeforehide" onupdatelayout="onupdatelayout" onpagebeforeshow="onpagebeforeshow">
                     <tizen.header id="header1" text="Sound List" text2="" data-position="fixed" icon-id="" src="">
                         <tizen.headerbutton id="newSoundButton" text="+" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide" ontap="newSoundButton_ontap"/>
                         <tizen.headerbutton id="settingsButton" text="*" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide" ontap="settingsButton_ontap"/>
@@ -25,7 +25,7 @@
                     <tizen.content id="content" data-handler="false">
                         <tizen.list id="soundListView" data-autodividers="false" data-fastscroll="false" ontap="soundListView_ontap"/>
                         <tizen.button id="startButton" text="Start" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="startButton_ontap"/>
-                        <html.htmlblock id="soundDialogBlock" class="">&lt;div data-role="popup" id="soundDialog"&gt; &lt;form&gt; Edit Sound &lt;input data-inline="true" value="Play" type="button"&gt;&lt;input data-inline="true" value="" type="text"&gt; &lt;/form&gt;&lt;/div&gt;</html.htmlblock>
+                        <html.htmlblock id="soundDialogBlock" class="">&lt;div id="soundDialog" data-role="popup"&gt; &lt;div class="ui-popup-title"&gt; &lt;h1&gt;Edit Sound&lt;/h1&gt; &lt;/div&gt; &lt;div class="ui-popup-text"&gt; &lt;input id="soundDialogID" value="" type="hidden"&gt; &lt;input id="soundDialogTitleInput" data-inline="true" value="" type="text"&gt; &lt;a id="soundDialogDeleteButton" data-role="button" data-rel="back" data-inline="true"&gt;X&lt;/a&gt; &lt;/div&gt; &lt;div class="ui-popup-button-bg"&gt; &lt;a id="soundDialogOKButton" data-role="button" data-rel="back" data-inline="true"&gt;OK&lt;/a&gt; &lt;a id="soundDialogCancelButton" data-role="button" data-rel="back" data-inline="true"&gt;Cancel&lt;/a&gt; &lt;/div&gt; &lt;/div&gt;</html.htmlblock>
                     </tizen.content>
                 </tizen.page>
             </tizen.doc>

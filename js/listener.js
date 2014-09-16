@@ -33,7 +33,7 @@ var listenerApp;
  * @extends {jQuery.eventEmitter}
  */
 function ListenerApp() {
-    this.soundList = []; // Sound list
+    this.sounds = {}; // soundID -> Sound map
     this.currentState = 'stopped'; // 'stopped' | 'running'
     this.history = []; // Alert list
     this.settings = {};
@@ -86,8 +86,8 @@ function Alert(soundID, timestamp) {
  */
 function generateNewSoundID() {
     var maxid = 0;
-    for(var i in listenerApp.soundList) {
-        var sound = listenerApp.soundList[i];
+    for(var i in listenerApp.sounds) {
+        var sound = listenerApp.sounds[i];
         maxid = (sound.id > maxid) ? sound.id : maxid; 
     }
     return maxid + 1;
@@ -103,14 +103,14 @@ function addNewSound(title, soundData, samplePackage) {
     console.log('addNewSound');
     var newid = generateNewSoundID();
     var newSound = new Sound(newid, title, soundData, samplePackage, ['flash', 'vibrate']);  
-    listenerApp.soundList.push(newSound);
+    listenerApp.sounds[newid] = newSound;
     saveApp();
     return newSound;
 }
 
 function getSoundByID(soundID) {
-	for (var i in listenerApp.soundList ) {
-		var sound = listenerApp.soundList[i];
+	for (var i in listenerApp.sounds) {
+		var sound = listenerApp.sounds[i];
 		if (sound.id == soundID) {
 			return sound;
 		}
@@ -145,10 +145,11 @@ function changeSound(soundID, soundObject) {
  * Delete sound
  */
 function deleteSound(soundID) {
-	for (var i in listenerApp.soundList ) {
-		var sound = listenerApp.soundList[i];
+	for (var i in listenerApp.sounds ) {
+		var sound = listenerApp.sounds[i];
 		if (sound.id == soundID) {
-			delete listenerApp.soundList[i];
+			delete listenerApp.sounds[i];
+			saveApp();
 			return true;
 		}
 	}
@@ -174,7 +175,7 @@ function loadApp() {
  */
 function saveApp() {
     console.log('save');
-    var appdata = _.pick(listenerApp, 'soundList', 'settings');
+    var appdata = _.pick(listenerApp, 'sounds', 'settings');
     console.log('appdata', appdata);
     localStorage.setItem('appdata', JSON.stringify(appdata));
 }
@@ -194,17 +195,16 @@ app.onload = function () {
     initApp();
 };
 
-function sampleMatcheHandler(sampleIndex) {
-	var sound = listenerApp.soundList[sampleIndex];
-	console.log("sample matched index:", sampleIndex, ", sound:", sound.id, sound.title);
-	listenerApp.emit('soundMatched', sound.id);
-}
-
 function startMatching() {
-	var samplePackages = _.pluck(listenerApp.soundList, 'samplePackage');
+	var soundArray = _.toArray(listenerApp.sounds);
+	var samplePackages = _.pluck(soundArray, 'samplePackage');
 	console.log('samplePackages', samplePackages);
 	console.log("startMatching(packages, sampleMatched); length", samplePackages.length);
-	matcher.startMatching(samplePackages, sampleMatcheHandler);
+	matcher.startMatching(samplePackages, function (sampleIndex) {
+		var sound = soundArray[sampleIndex];
+		console.log("sample matched index:", sampleIndex, ", sound:", sound.id, sound.title);
+		listenerApp.emit('soundMatched', sound.id);
+	});
 }
 function stopMatching() {
 	console.log("stopMatching();");

@@ -17,8 +17,8 @@ function getHoldHandler(sound) {
 function updateSoundList() {
 	var soundListView = $('#soundListView');
 	soundListView.children().remove();
-	for (var i in listenerApp.soundList) {
-		var sound = listenerApp.soundList[i];
+	for (var i in listenerApp.sounds) {
+		var sound = listenerApp.sounds[i];
 		console.log('add sound:', sound);
 		
 		var li = $('<li><img src="../res/thumbnail.jpg" class="ui-li-bigicon"><span class="ui-li-text-main"></span><div data-role="toggleswitch"/></div></li>');
@@ -116,5 +116,23 @@ _list_page.prototype.onpagebeforeshow = function(event) {
 _list_page.prototype.onpagebeforehide = function(event) {
 	console.log('list off matchHandler');
 	listenerApp.off('soundMatched', listMatchHandler);
+};
+
+/**
+ * @param {Object} event
+ * @base _list_page
+ * @returns {Boolean}
+*/
+_list_page.prototype.unbinded_function = function(event) {
+	
+};
+
+/**
+ * @param {Object} event
+ * @base _list_page
+ * @returns {Boolean}
+*/
+_list_page.prototype.onupdatelayout = function(event) {
+	
 };
 
