@@ -155,7 +155,7 @@ function loadApp() {
     console.log('before load listenerApp', listenerApp)
     if (localStorage.appdata) {
         _.extend(listenerApp, JSON.parse(localStorage.appdata));
-    	
+        
     }
     console.log('after load listenerApp', listenerApp)
 }
@@ -352,21 +352,21 @@ function Alert(soundID, timestamp) {
     this.timestamp = timestamp;
 }
 
-function History() {
-	// TODO
+function History(soundID, timestamp) {
+	this.soundID = soundID;
+    this.timestamp = timestamp;
 }
 
 function addNewHistory(soundID, timestamp) {
-	// TODO
-    listenerApp.history.push(newSound);
+	var newHistory = new History(soundID, timestamp);
+    listenerApp.history.push(newHistory);
 }
 
 function getHistoryByID(soundID) {
-	// TODO
-	for (var i in listenerApp.soundList ) {
-		var sound = listenerApp.soundList[i];
-		if (sound.id == soundID) {
-			return sound;
+	for (var i in listenerApp.history ) {
+		var history = listenerApp.history[i];
+		if (history.soundID == soundID) {
+			return history;
 		}
 	}
 	return null;
