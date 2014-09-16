@@ -65,12 +65,19 @@
 
 	</style>
 	<script>
-	var matcher = new Matcher();
+	var option = Matcher.createOptions();
+	option.samplingType = 3;
+	var matcher = new Matcher(option);
 	var packages = [];
+	lastSample = null;
 	function info(msg) {
 		document.getElementById("info").innerText = msg;
 	}
 	matcher.setDebugHandler(info);
+	function setLastSample(sample) {
+		lastSample = sample;
+	}
+	matcher.setSamplingHandler(setLastSample);
 	function startSampling() {
 		matcher.startSampling();
 		console.log("matcher.startSampling();");
