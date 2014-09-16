@@ -65,20 +65,33 @@
 
 	</style>
 	<script>
-	var option = Matcher.createOptions();
-	option.samplingType = 3;
-	var matcher = new Matcher(option, audioReady);
-	
+	var matcher;
 	var packages = [];
-	lastSample = null;
-	function info(msg) {
-		document.getElementById("info").innerText = msg;
+	function documentReady() {
+		var option = Matcher.createOptions();
+		option.samplingType = 3;
+		matcher = new Matcher(option, audioReady);
+		
+		lastSample = null;
+		
+		var analyser = null;
+		matcher.setDebugHandler(info);
+		matcher.setSamplingHandler(setLastSample);
+
+		function audioReady() {
+			analyser = matcher.createAnalyser("wavedisplay", 0.0, 0.5);
+			matcher.startAnalyser(analyser);
+		}
+		function info(msg) {
+			document.getElementById("info").innerText = msg;
+		}
 	}
-	matcher.setDebugHandler(info);
+	
+	window.addEventListener("load", documentReady);
+	
 	function setLastSample(sample) {
 		lastSample = sample;
 	}
-	matcher.setSamplingHandler(setLastSample);
 	function startSampling() {
 		matcher.startSampling();
 		console.log("matcher.startSampling();");
@@ -101,14 +114,39 @@
 		matcher.stopMatching();
 		console.log("matcher.stopMatching();");
 	}
-	
-	var analyser = null;
-	function audioReady() {
-		analyser = matcher.createAnalyser("wavedisplay", 0.0, 0.5);
-		matcher.startAnalyser(analyser);
-	}
 
+	function inject_css2(id, css) {
+		var element = document.createElement('style');
+		element.id = id; 
+		document.head.appendChild(element).innerHTML = css;
+	}
+	function blink(id) {
+		var element = document.getElementById(id);
+		element.classList.remove("blink");
+		element.addEventListener("webkitAnimationEnd", function() {
+			this.classList.remove("blink");
+		}, false);
+		setTimeout(function() {
+			element.classList.add("blink");
+		}, 1);
+	}
+	
+	function startAnimation() {
+		blink("controls");
+	}
 	</script>
+	
+	<style type="text/css">
+.blink {
+	-webkit-animation: myblink 1s;
+}
+
+@-webkit-keyframes myblink {
+	0%   {background-color: rgba(255, 0, 0, 1.0);}
+	100% {background-color: rgba(255, 0, 0, 0.0);}
+}
+	</style>
+	
 </head>
 <body>
 	<div id="viz">
@@ -120,6 +158,7 @@
 		<button id="stopSampling" onclick="stopSampling();">Stop Sampling</button>
 		<button id="startMatching" onclick="startMatching();">Start Matching</button>
 		<button id="stopMatching" onclick="stopMatching();">Stop Matching</button>
+		<button id="startAnimation" onclick="startAnimation();">Start Animation</button>
 		<img id="record" src="http://www.dangsam.com/AudioRecorder/img/mic128.png" onclick="toggleRecording(this);">
 		<a id="save" href="http://webaudiodemos.appspot.com/AudioRecorder/index.html#"><img src="http://www.dangsam.com/AudioRecorder/img/save.svg"></a>
 	</div>
