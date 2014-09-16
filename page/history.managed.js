@@ -20,11 +20,13 @@ _history_page.prototype = new _page("history");
 // widget assist
 _history_page.prototype.header1 = undefined;
 _history_page.prototype.backButton = undefined;
+_history_page.prototype.trashButton = undefined;
 _history_page.prototype.content1 = undefined;
 _history_page.prototype.alertList = undefined;
 
 // default widget event handler
 _history_page.prototype.backButton_ontap = function(event) {};
+_history_page.prototype.trashButton_ontap = function(event) {};
 
 _history_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, managedCssPath) {
 	this.htmlPath = htmlPath;
@@ -47,6 +49,11 @@ _history_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, man
 		/**
 		 * @type jQueryObject
 		 */
+		_history_page.prototype.trashButton = $("#history #trashButton");
+
+		/**
+		 * @type jQueryObject
+		 */
 		_history_page.prototype.content1 = $("#history #content1");
 
 		/**
@@ -56,6 +63,7 @@ _history_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, man
 
 		// bind widget event handler
 		_history_page.prototype.backButton.bind("tap", function(event) { _history_page.prototype.backButton_ontap(event); });
+		_history_page.prototype.trashButton.bind("tap", function(event) { _history_page.prototype.trashButton_ontap(event); });
 
 	}, isStartPage);
 

@@ -20,10 +20,12 @@
             <library type="entry" param="./tizen-ui-builder-fw/app-entry.js"/>
             <library type="entry" param="./app.js"/>
             <library type="user" param="./js/listener.js"/>
+            <library type="user" param="./js/matcher/soundkeymatching.js"/>
+            <library type="user" param="./js/matcher/matcher.js"/>
         </libraries>
         <frameworks>
             <variables>
-                <variable name="theme" value="tizen-white"/>
+                <variable name="theme" value="tizen-black"/>
                 <variable name="viewportmode" value="device-width"/>
             </variables>
             <framework param="@tizen_jquery" path="tizen-web-ui-fw/latest/js/jquery.js"/>
