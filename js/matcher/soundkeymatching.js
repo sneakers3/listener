@@ -292,7 +292,7 @@ function SoundKeyMatching(options) {
 // 설정 기본값을 반환
 SoundKeyMatching.createOptions = function() {
 	return {
-		samplingType: 3, /*
+		samplingType: 1, /*
 			1: volume level 검출 (테스트용)
 			2: peak 와 내리막 검출 (별로임)
 			3: 이동평균 peak 검출
@@ -300,16 +300,14 @@ SoundKeyMatching.createOptions = function() {
 		samplingFreq: 5, // doSampling() 호출 주기 (초당 5회) - 샘플링에 영향을 주지 않음. 호출 권장횟수를 의미
 		matchingFreq: 5, // doMatching() 호출 주기 (초당 5회) - 매칭에 영향을 주지 않음. 호출 권장횟수를 의미
 		minSamplingVolumeLevel: 5000, // 전체 볼륨이 얼만큼 이상일 때 샘플을 추출하는가? (minMatchingVolumeLevel 보다 높은 값을 권장)
-		minMatchingVolumeLevel: 3000, // 전체 볼륨이 얼만큼 이상일 때 매칭을 시도하는가? (minSamplingVolumeLevel 보다 낮은 값을 권장)
+		minMatchingVolumeLevel: 2000, // 전체 볼륨이 얼만큼 이상일 때 매칭을 시도하는가? (minSamplingVolumeLevel 보다 낮은 값을 권장)
 		// 내리막 따라가기
 		minCheckLevel: 10,	// 주파수 대역별로 얼마의 level 이 되어야 정상으로 인식하는가?
 		peakEndingCheck: 10,	// 주파수 대역이 Max 이후로 몇 번 지나면 한 번의 봉우리가 완료된 것인가?
-		// 정상 찾기
-		avgRange: 5,	// 얼만큼의 주파수 대역을 평균내서 정상/계곡을 찾을 것인가? (1 보다 커야 함)
 		
 		// 일반
 		sampleEndingCheck: 5,	// level 이 Max 이후로 몇 번 지나면 한 번의 샘플링이 완료된 것인가?
-		matchingFreqTolerance: 5, // 정상/계곡 마다의 주파수 대역을 좌우로 어디까지 비교해 볼 것인가?
+		matchingFreqTolerance: 3, // 정상/계곡 마다의 주파수 대역을 좌우로 어디까지 비교해 볼 것인가?
 		matchingLevelTolerance: 10, // 정상/계곡 마다의 레벨이 얼만큼 차이가 나도 일치한 것으로 보는가?
 		matchingRate: 0.7	// 정상/계곡이 샘플 대비 몇 개나 일치해야 매칭으로 보는가?
 	};

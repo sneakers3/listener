@@ -28,6 +28,77 @@ function Matcher(options) {
 	
 	var samplingTimer = null;
 	var matchingTimer = null;
+
+	var analyser = {
+		id: null,
+		context: null, 
+		width: 0,
+		height: 0
+	}
+	
+	
+	this.setAnalyserCanvasId = function(canvasId) {
+		analyser.id = canvasId;
+		var canvas = document.getElementById(analyser.id);
+		analyser.width = canvas.width;
+		analyser.height = canvas.height;
+		analyser.context = canvas.getContext("2d");
+	}
+
+	this.drawAnalyser = function(minFreqRatio, maxFreqRatio) {
+		if (!analyserContext) {
+			return false;
+		}
+		
+		if (!minFreqRatio) minFreqRatio = 0.0;
+		if (!maxFreqRatio) maxFreqRatio = 1.0;
+		if (minFreqRatio > maxFreqRatio ||
+			minFreqRatio < 0.0 || minFreqRatio > 1.0 ||
+			maxFreqRatio < 0.0 || maxFreqRatio > 1.0) {
+			minFreqRatio = 0.0;
+			maxFreqRatio = 1.0;
+		}
+
+		// clear canvas
+        analyser.context.clearRect(0, 0, analyser.width, analyser.height);
+		
+        var SPACING = 3;
+        var BAR_WIDTH = 1;
+        var numBars = Math.round(analyser.width / SPACING);
+        var freqByteData = new Uint8Array(analyserNode.frequencyBinCount);
+        analyserNode.getByteFrequencyData(freqByteData); 
+		
+        analyser.context.clearRect(0, 0, analyser.width, analyser.height);
+        analyser.context.fillStyle = '#F6D565';
+        //analyserContext.lineCap = 'round';
+        //var multiplier = analyserNode.frequencyBinCount / numBars;
+		var regionStart = Math.floor(analyserNode.frequencyBinCount * minFreqRatio);
+		var regionEnd = Math.floor(analyserNode.frequencyBinCount * (minFreqRatio + maxFreqRatio));
+		var multiplier = (regionEnd - regionStart) / numBars;
+
+        // Draw rectangle for each frequency bin.
+        for (var i = 0; i < numBars; ++i) {
+            var magnitude = 0;
+            var offset1 = regionStart + Math.floor( i * multiplier );
+			var offset2 = Math.floor((i + 1) * multiplier ) - offset1;
+            // gotta sum/average the block, or we miss narrow-bandwidth spikes
+			for (var j = 0; j < offset2; j++) {
+                magnitude += freqByteData[offset1 + j];
+				// 범위 안에 샘플 peak 이 존재하면 그리자.
+			/*
+				if (lastSample && lastSample[offset1 + j]) {
+					analyser.context.fillStyle = "#FFFFFF";
+					analyser.context.fillRect(i * SPACING, analyser.height, BAR_WIDTH, -lastSample[offset1 + j]);
+				}
+			*/
+			}
+			magnitude = magnitude / offset2;
+            analyser.context.fillStyle = "hsl( " + Math.round((i*360)/numBars) + ", 100%, 50%)";
+            analyser.context.fillRect(i * SPACING, analyser.height, BAR_WIDTH, -magnitude);
+        }
+		
+		return true;
+	}
 	
 	function gotMatchingStream(stream) {
 		var inputPoint = audioContext.createGain();
