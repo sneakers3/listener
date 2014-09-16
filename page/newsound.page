@@ -22,7 +22,7 @@
                 </tizen.selector>
             </tizen.css>
             <tizen.doc>
-                <tizen.page id="newsound" data-dom-cache="false" data-title="" onpageinit="onpageinit">
+                <tizen.page id="newsound" data-dom-cache="false" data-title="" onpageshow="onpageshow" onpageinit="onpageinit">
                     <tizen.header id="newSoundHeader" text="New Sound" text2="" data-position="fixed" icon-id="" src="">
                         <tizen.headerbutton id="backButton" text="Button" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide" ontap="backButton_ontap"/>
                     </tizen.header>

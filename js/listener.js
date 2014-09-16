@@ -195,7 +195,7 @@ app.onload = function () {
 
 function sampleMatcheHandler(sampleIndex) {
 	var sound = listenerApp.soundList[sampleIndex];
-	console.log("sample matched index:", sampleIndex, ", sound:", sound);
+	console.log("sample matched index:", sampleIndex, ", sound:", sound.id, sound.title);
 	listenerApp.emit('soundMatched', sound.id);
 }
 
