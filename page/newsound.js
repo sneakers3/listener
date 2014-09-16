@@ -4,18 +4,25 @@
 ********************************************************************************/
 var isRecording = false;
 var samplePackage;
-
+var analyser;
 function startRecord() {
 	matcher.startSampling();
 	console.log("matcher.startSampling();");
 	isRecording = true;
+
+	// draw canvas
+	analyser = matcher.createAnalyser("soundCanvas", 0.0, 0.5);
+	matcher.startAnalyser(analyser);
 }
 
 function stopRecord() {
 	samplePackage = matcher.stopSampling();
 	console.log("matcher.stopSampling();");
 	console.log("package received #" + samplePackage.length, samplePackage);
-    isRecording = false;
+	isRecording = false;
+
+	// stop draw canvas
+	matcher.stopAnalyser(analyser);
 }
 
 /**
