@@ -13,15 +13,15 @@ Do not hand edit this file.
     <div data-role="page" id="list" data-dom-cache="false" data-title="">
       <div data-role="header" id="header1" data-position="fixed">
         <h1>Sound List</h1>
-        <div data-ajax="true" id="newSoundButton" href="" data-direction="" data-dom-cache="false" data-transition="slide" data-role="button" data-icon="plus" class="naviframe-button"></div>
-        <div data-ajax="true" id="settingsButton" href="" data-direction="" data-dom-cache="false" data-transition="slide" data-role="button" data-icon="gear" class="naviframe-button"></div>
+        <a data-ajax="true" id="newSoundButton" href="" data-direction="" data-dom-cache="false" data-transition="slide">+</a>
+        <a data-ajax="true" id="settingsButton" href="" data-direction="" data-dom-cache="false" data-transition="slide">*</a>
       </div>
       <div data-role="content" data-scroll="y" id="content" data-handler="false">
         <ul data-role="listview" id="soundListView" data-autodividers="false"></ul>
         <div data-role="button" data-corners="false" id="startButton" data-style="" data-icon="" data-inline="false">Start</div>
         <div id="soundDialogBlock" class="">
           <!--HtmlCodeBlock-Start[#soundDialogBlock]-->
-                     <div id="soundDialog" data-role="popup"> <div class="ui-popup-title"> <h1>Edit Sound</h1> </div> <div class="ui-popup-text"> <input id="soundDialogID" value="" type="hidden"> <input id="soundDialogTitleInput" data-inline="true" value="" type="text"> <a id="soundDialogDeleteButton" data-role="button" data-rel="back" data-inline="true">X</a> </div> <div class="ui-popup-button-bg"> <a id="soundDialogOKButton" data-role="button" data-rel="back" data-inline="true">OK</a> <a id="soundDialogCancelButton" data-role="button" data-rel="back" data-inline="true">Cancel</a> </div> </div>
+					 <div id="soundDialog" data-role="popup"> <div class="ui-popup-title"> <h1>Edit Sound</h1> </div> <div class="ui-popup-text"> <input id="soundDialogID" value="" type="hidden"> <input id="soundDialogTitleInput" data-inline="true" value="" type="text"> <a id="soundDialogDeleteButton" data-role="button" data-rel="back">Delete</a> </div> <div class="ui-popup-button-bg"> <a id="soundDialogOKButton" data-role="button" data-rel="back" data-inline="true">OK</a> <a id="soundDialogCancelButton" data-role="button" data-rel="back" data-inline="true">Cancel</a> </div> </div>
           <!--HtmlCodeBlock-End[#soundDialogBlock]-->
         </div>
       </div>

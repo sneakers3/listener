@@ -20,7 +20,12 @@ function getOnOffHandler(sound) {
 		changeSound(sound.id, {enabled: event.target.checked});
 	};
 }
-
+function getNotiOnOffHandler(sound) {
+	return function (event) {
+		console.log('noti onoff', sound.id, event, $(event.target).val());
+		changeSound(sound.id, {notiEnabled: $(event.target).val() === 'on'});
+	}
+}
 function updateSoundList() {
 	var soundListView = $('#soundListView');
 	soundListView.children().remove();
@@ -29,7 +34,6 @@ function updateSoundList() {
 		console.log('add sound:', sound);
 		
 		var li = $('<li class="ui-li-has-checkbox">' + 
-				
 				'<input type="checkbox" name="onoff"/>' +
 				'<img src="../res/thumbnail.jpg" class="ui-li-bigicon">' +
 				'<span class="ui-li-text-main"></span>' + 
@@ -47,7 +51,10 @@ function updateSoundList() {
 			attr('checked', sound.enabled).
 			on('change', getOnOffHandler(sound)).
 			checkboxradio();
-		li.children('select').slider();
+		li.children('select').
+			val(sound.notiEnabled ? 'on' : 'off').
+			on('change', getNotiOnOffHandler(sound)).
+			slider();
 	}
 }
 

@@ -61,17 +61,17 @@ function stop() {
  * @param alertMethods
  * @class
  */
-function Sound(id, title, enabled, soundData, samplePackage, alertMethods) {
+function Sound(id, title, enabled, soundData, samplePackage, notiEnabled) {
     this.id = id;
     this.title = title;
     this.enabled = enabled;
     this.soundData = soundData;
     this.samplePackage = samplePackage;
-    this.alertMethods = alertMethods; // ('flash' | 'vibrate') set
+    this.notiEnabled = notiEnabled;
 }
 
 /**
- * 
+ * Generate new sound id (max sound id + 1)
  * @returns {Number}
  */
 function generateNewSoundID() {
@@ -92,7 +92,7 @@ function generateNewSoundID() {
 function addNewSound(title, soundData, samplePackage) {
     console.log('addNewSound');
     var newid = generateNewSoundID();
-    var newSound = new Sound(newid, title, true, soundData, samplePackage, ['flash', 'vibrate']);  
+    var newSound = new Sound(newid, title, true, soundData, samplePackage, true);  
     listenerApp.sounds[newid] = newSound;
     saveApp();
     return newSound;
@@ -118,7 +118,7 @@ function changeSound(soundID, soundObject) {
 		console.error('changeSound soundID not found:', soundID);
 		return false;
 	}
-	soundObject = _.pick(soundObject, 'title', 'soundData', 'samplePackage', 'enabled', 'alertMethods');
+	soundObject = _.pick(soundObject, 'title', 'soundData', 'samplePackage', 'enabled', 'alertMethods', 'notiEnabled');
 	_.extend(sound, soundObject);
 	saveApp();
 	return true;
