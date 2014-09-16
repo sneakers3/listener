@@ -155,7 +155,6 @@ function loadApp() {
     console.log('before load listenerApp', listenerApp)
     if (localStorage.appdata) {
         _.extend(listenerApp, JSON.parse(localStorage.appdata));
-    	
     }
     console.log('after load listenerApp', listenerApp)
 }

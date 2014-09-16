@@ -4,6 +4,7 @@
 ********************************************************************************/
 
 var editPopup;
+var listTimerMap = {};
 
 function getHoldHandler(sound) {
 	return function (event) {
@@ -21,7 +22,14 @@ function updateSoundList() {
 		var sound = listenerApp.sounds[i];
 		console.log('add sound:', sound);
 		
-		var li = $('<li><img src="../res/thumbnail.jpg" class="ui-li-bigicon"><span class="ui-li-text-main"></span><div data-role="toggleswitch"/></div></li>');
+		var li = $('<li><img src="../res/thumbnail.jpg" class="ui-li-bigicon">' +
+				'<span class="ui-li-text-main"></span>' + 
+//				'<input type="radio" name="radio-choice" value="choice-1" checked="checked" />' + 
+//				'<select data-role="slider">' + 
+//					'<option value="off"></option>' + 
+//					'<option value="on"></option>' + 
+//				'</select>' + 
+				'</li>');
 		li.children('.ui-li-text-main').text(sound.title);
 		li.attr('sound-id', sound.id);
 		li.on("taphold", getHoldHandler(sound));
@@ -31,9 +39,30 @@ function updateSoundList() {
 	startMatching();
 }
 
+
+function getSoundItemFromID(soundID) {
+	return $('#soundListView li[sound-id=' + soundID +']');
+}
 function listMatchHandler(event, soundID) {
 	console.log('list matchHandler', soundID);
-	// TODO update status of sounds
+	
+	// set background of sound item and remove it after a period
+	var timer = listTimerMap[soundID];
+	if (timer) {
+//		console.log('clear timer for', soundID);
+		clearTimeout(timer);
+	}
+	var soundItem = getSoundItemFromID(soundID);
+//	console.log('soundItem', soundID, soundItem);
+	soundItem.css('background', 'red');
+	var handler = function () {
+//		console.log('Handler for ', soundID);
+		soundItem.css('background', '');
+		delete listTimerMap[soundID];
+	}
+	
+	var newTimer = setTimeout(handler, 2000);
+	listTimerMap[soundID] = newTimer;
 }
 
 /**
