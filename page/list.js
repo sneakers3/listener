@@ -14,6 +14,12 @@ function getHoldHandler(sound) {
 		$('#soundDialog').popup('open');
 	};
 }
+function getOnOffHandler(sound) {
+	return function (event) {
+		console.log('onoff ', sound.id, event);
+		changeSound(sound.id, {enabled: event.target.checked});
+	};
+}
 
 function updateSoundList() {
 	var soundListView = $('#soundListView');
@@ -22,21 +28,27 @@ function updateSoundList() {
 		var sound = listenerApp.sounds[i];
 		console.log('add sound:', sound);
 		
-		var li = $('<li><img src="../res/thumbnail.jpg" class="ui-li-bigicon">' +
+		var li = $('<li class="ui-li-has-checkbox">' + 
+				
+				'<input type="checkbox" name="onoff"/>' +
+				'<img src="../res/thumbnail.jpg" class="ui-li-bigicon">' +
 				'<span class="ui-li-text-main"></span>' + 
-//				'<input type="radio" name="radio-choice" value="choice-1" checked="checked" />' + 
-//				'<select data-role="slider">' + 
-//					'<option value="off"></option>' + 
-//					'<option value="on"></option>' + 
-//				'</select>' + 
+				'<select data-role="slider">' + 
+					'<option value="off"></option>' + 
+					'<option value="on"></option>' + 
+				'</select>' + 
 				'</li>');
+
 		li.children('.ui-li-text-main').text(sound.title);
 		li.attr('sound-id', sound.id);
 		li.on("taphold", getHoldHandler(sound));
 		soundListView.append(li).listview('refresh');
+		li.children('input[name=onoff]').
+			attr('checked', sound.enabled).
+			on('change', getOnOffHandler(sound)).
+			checkboxradio();
+		li.children('select').slider();
 	}
-	stopMatching();
-	startMatching();
 }
 
 
