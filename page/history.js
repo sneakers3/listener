@@ -11,29 +11,28 @@ function addNewAlert() {
 }
 
 function historyMatchHandler( event, soundID ) {
-	console.log( 'history matchHandler', soundID );
-	var currentDate = new Date;
-	var history = getHistoryByID( soundID );
+    console.log( 'history matchHandler', soundID );
+    var currentDate = new Date;
 
-	// check history list
-	// check time stamp 
-	if (!history) {
-		addNewHistory(soundID, currentDate);
-	} else {
-		var diffMs = currentDate - history.timestamp;
-		var diffMin =  Math.round(((diffMs % 86400000) % 3600000) / 60000);
-		if ( diffMin < 1) {
-			// ignore match
-			return;
-		} else {
-			history.timestamp = currentDate;
-		}
-	}
+    var history = getHistoryByID( soundID );
 
-	
-	// TODO
-	// push history list
-	var sound = getSoundByID(soundID);
+    if ( !history ) {
+        // new history
+        addNewHistory(soundID, currentDate);
+    } else {
+        // exist history
+        var diffMs = currentDate - history.timestamp;
+        var diffMin =  Math.round(((diffMs % 86400000) % 3600000) / 60000);
+        if ( diffMin < 1) {
+            // ignore match
+            return;
+        } else {
+            // update time
+            history.timestamp = currentDate;
+        }
+    }
+
+    var sound = getSoundByID( soundID );
     var noti = {
             id : sound.id,
             message : sound.title,
@@ -41,25 +40,30 @@ function historyMatchHandler( event, soundID ) {
     }
     notification(noti);
 
-    updateHistoryList()
+    updateHistoryList();
 }
 
 function updateHistoryList() {
-	var historyListView = $('#alertList');
-	historyListView.children().remove();
-	
-	var currentDate = new Date;
-	
-	for (var i in listenerApp.history) {
-		var history = listenerApp.history[i];
-		var sound = getSoundByID(history.soundID);
+    var historyListView = $('#alertList');
+    historyListView.children().remove();
 
-		var diffMs = currentDate - history.timestamp;
-		var diffMin =  Math.round(((diffMs % 86400000) % 3600000) / 60000);
-		
-		var li = '<li><img src="../res/thumbnail.jpg" alt="icon" class="ui-li-bigicon">' + sound.title + '<span class="ui-li-text-sub">' + diffMin + '분전' + '</span></li>';
-		historyListView.append(li).listview('refresh');
-	}
+    var currentDate = new Date;
+    
+    for ( var i in listenerApp.history ) {
+        var history = listenerApp.history[i];
+        var sound = getSoundByID(history.soundID);
+
+        // check removed sound
+        if (!sound || !sound.title) {
+            continue;
+        }
+
+        var diffMs = currentDate - history.timestamp;
+        var diffMin =  Math.round(((diffMs % 86400000) % 3600000) / 60000);
+
+        var li = '<li><img src="../res/thumbnail.jpg" alt="icon" class="ui-li-bigicon">' + sound.title + '<span class="ui-li-text-sub">' + diffMin + '분전' + '</span></li>';
+        historyListView.append(li).listview('refresh');
+    }
 }
 
 /**
@@ -79,7 +83,7 @@ _history_page.prototype.onpagebeforehide = function(event) {
  * @returns {Boolean}
 */
 _history_page.prototype.onpagebeforeshow = function(event) {
-	updateHistoryList()
+    updateHistoryList()
     console.log('history page before show');
     start();
 
@@ -101,9 +105,9 @@ _history_page.prototype.backButton_ontap = function(event) {
  * @returns {Boolean}
 */
 _history_page.prototype.trashButton_ontap = function(event) {
-	var historyListView = $('#alertList');
-	historyListView.children().remove();
-	listenerApp.history = [];
+    var historyListView = $('#alertList');
+    historyListView.children().remove();
+    listenerApp.history = [];
 };
 
 /**
@@ -112,6 +116,6 @@ _history_page.prototype.trashButton_ontap = function(event) {
  * @returns {Boolean}
 */
 _history_page.prototype.onpageinit = function(event) {
-	updateHistoryList();
+    updateHistoryList();
 };
 
