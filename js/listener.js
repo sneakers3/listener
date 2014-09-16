@@ -1,8 +1,36 @@
 var listenerApp;
 
+(function(jQuery) {
+	jQuery.eventEmitter = {
+			_JQInit: function() {
+				this._JQ = jQuery(this);
+			},
+			emit: function(evt, data) {
+				!this._JQ && this._JQInit();
+				this._JQ.trigger(evt, data);
+			},
+			once: function(evt, handler) {
+				!this._JQ && this._JQInit();
+				this._JQ.one(evt, handler);
+			},
+			on: function(evt, handler) {
+				!this._JQ && this._JQInit();
+				this._JQ.bind(evt, handler);
+			},
+			off: function(evt, handler) {
+				!this._JQ && this._JQInit();
+				this._JQ.unbind(evt, handler);
+			}
+	};
+}(jQuery));
+
 /**
  * Listener App model
+ * 
+ * Emit 'soundMatched' event when sound is matched.
+ * 
  * @class
+ * @extends {jQuery.eventEmitter}
  */
 function ListenerApp() {
     this.soundList = []; // Sound list
@@ -10,8 +38,9 @@ function ListenerApp() {
     this.history = []; // Alert list
     this.settings = {};
     this.notiSettings = {}; // handles 'ignore 5mins' 
-    this.alertListeners = [];
 }
+
+jQuery.extend(ListenerApp.prototype, jQuery.eventEmitter);
 
 /**
  * Sound model
@@ -39,22 +68,6 @@ function Sound(id, title, soundData, samplePackage, alertMethods) {
 function Alert(soundID, timestamp) {
     this.soundID = soundID;
     this.timestamp = timestamp;
-}
-
-/**
- * Handler for new alert
- * @param alert
- */
-function onNewAlert(alert) {
-    // TODO
-    for (var i in listenerApp.alertListeners) {
-        var l = listenserApp.alertListeners[i];
-        l(alert);
-    }
-}
-
-function addAlertListener(alertListener) {
-    listenerApp.alertListeners.push(alertListener);
 }
 
 /**
@@ -181,7 +194,9 @@ app.onload = function () {
 };
 
 function sampleMatcheHandler(sampleIndex) {
-	console.log("sample matched index:", sampleIndex, ", sound:", listenerApp.soundList[sampleIndex]);
+	var sound = listenerApp.soundList[sampleIndex];
+	console.log("sample matched index:", sampleIndex, ", sound:", sound);
+	listenerApp.emit('soundMatched', sound.id);
 }
 
 function startMatching() {

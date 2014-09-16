@@ -31,6 +31,10 @@ function updateSoundList() {
 	startMatching();
 }
 
+function matchHandler(soundID) {
+	console.log('list matchHandler', soundID);
+}
+
 /**
  * @param {Object} event
  * @base _list_page
@@ -47,15 +51,6 @@ _list_page.prototype.startButton_ontap = function(event) {
 */
 _list_page.prototype.newSoundButton_ontap = function(event) {
 	pageManager.changePage('newsound', {});
-};
-
-/**
- * @param {Object} event
- * @base _list_page
- * @returns {Boolean}
-*/
-_list_page.prototype.onpagebeforeshow = function(event) {
-	updateSoundList();
 };
 
 /**
@@ -99,5 +94,24 @@ _list_page.prototype.onpageinit = function(event) {
 			updateSoundList();
 		}
 	});
+};
+
+/**
+ * @param {Object} event
+ * @base _list_page
+ * @returns {Boolean}
+*/
+_list_page.prototype.onpagebeforeshow = function(event) {
+	updateSoundList();
+	listenerApp.on('soundMatched', matchHandler);
+};
+
+/**
+ * @param {Object} event
+ * @base _list_page
+ * @returns {Boolean}
+*/
+_list_page.prototype.onpagebeforehide = function(event) {
+	listenerApp.off('soundMatched', matchHandler);
 };
 
