@@ -355,6 +355,7 @@ function Alert(soundID, timestamp) {
 function History(soundID, timestamp) {
 	this.soundID = soundID;
     this.timestamp = timestamp;
+    this.currentStamp = null;
 }
 
 function addNewHistory(soundID, timestamp) {
