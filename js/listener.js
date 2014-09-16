@@ -42,6 +42,16 @@ function ListenerApp() {
 
 jQuery.extend(ListenerApp.prototype, jQuery.eventEmitter);
 
+function start() {
+	console.log('start');
+	listenerApp.currentState = 'running';
+}
+
+function stop() {
+	console.log('stop');
+	listenerApp.currentState = 'stopped';
+}
+
 /**
  * Sound model
  * @param id
@@ -145,35 +155,18 @@ function deleteSound(soundID) {
 }
 
 /**
- * Start listening
+ * load saved sounds
  */
-function start() {
-    // TODO
-    console.log('start');
-    listenerApp.currentState = 'running';
-}
-
-/**
- * Stop listening
- */
-function stop() {
-    // TODO
-    console.log('stop');
-    listenerApp.currentState = 'stopped';
-}
-
-/**
- * load saved sounds and settings
- */
-function load() {
+function loadSounds() {
     // TODO
     console.log('load');
+    localStorage
 }
 
 /**
- * save sounds and settings
+ * save sounds
  */
-function save() {
+function saveSounds() {
     // TODO
     console.log('save');
 }
@@ -184,7 +177,7 @@ function save() {
 function initApp() {
     console.log('init');
     listenerApp = new ListenerApp();
-    load();
+    loadSounds();
     init_Matcher();
 }
 

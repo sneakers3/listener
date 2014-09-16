@@ -3,12 +3,11 @@
 * User should hand edit this file.
 ********************************************************************************/
 
-
 var editPopup;
 
 function getHoldHandler(sound) {
 	return function (event) {
-		console.log('li taphold', sound);
+		console.log('sound item taphold', sound);
 		$('#soundDialogID').val(sound.id);
 		$('#soundDialogTitleInput').val(sound.title);
 		$('#soundDialog').popup('open');
@@ -105,6 +104,7 @@ _list_page.prototype.onpageinit = function(event) {
 */
 _list_page.prototype.onpagebeforeshow = function(event) {
 	updateSoundList();
+	console.log('list on matchHandler');
 	listenerApp.on('soundMatched', matchHandler);
 };
 
@@ -114,6 +114,7 @@ _list_page.prototype.onpagebeforeshow = function(event) {
  * @returns {Boolean}
 */
 _list_page.prototype.onpagebeforehide = function(event) {
+	console.log('list off matchHandler');
 	listenerApp.off('soundMatched', matchHandler);
 };
 

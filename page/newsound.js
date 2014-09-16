@@ -230,14 +230,6 @@ _newsound_page.prototype.onpageinit = function(event) {
  * @base _newsound_page
  * @returns {Boolean}
 */
-_newsound_page.prototype.unbinded_function = function(event) {
-};
-
-/**
- * @param {Object} event
- * @base _newsound_page
- * @returns {Boolean}
-*/
 _newsound_page.prototype.onpageshow = function(event) {
 	// set default title generated from new sound id
 	var newSoundID = generateNewSoundID();
