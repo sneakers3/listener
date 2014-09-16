@@ -21,7 +21,7 @@ function test() {
     notification(noti);
 }
 
-function matchHandler(event, soundID) {
+function historyMatchHandler(event, soundID) {
 	console.log('history matchHandler', soundID);
     var noti = {
             id : soundID,
@@ -39,7 +39,7 @@ function matchHandler(event, soundID) {
 _history_page.prototype.onpagebeforehide = function(event) {
     console.log('history page before hide');
     stop();
-    listenerApp.off('soundMatched', matchHandler);
+    listenerApp.off('soundMatched', historyMatchHandler);
 };
 
 /**
@@ -51,7 +51,7 @@ _history_page.prototype.onpagebeforeshow = function(event) {
     console.log('history page before show');
     start();
 
-    listenerApp.on('soundMatched', matchHandler);
+    listenerApp.on('soundMatched', historyMatchHandler);
 };
 
 /**

@@ -31,7 +31,7 @@ function updateSoundList() {
 	startMatching();
 }
 
-function matchHandler(event, soundID) {
+function listMatchHandler(event, soundID) {
 	console.log('list matchHandler', soundID);
 	// TODO update status of sounds
 }
@@ -105,7 +105,7 @@ _list_page.prototype.onpageinit = function(event) {
 _list_page.prototype.onpagebeforeshow = function(event) {
 	updateSoundList();
 	console.log('list on matchHandler');
-	listenerApp.on('soundMatched', matchHandler);
+	listenerApp.on('soundMatched', listMatchHandler);
 };
 
 /**
@@ -115,6 +115,6 @@ _list_page.prototype.onpagebeforeshow = function(event) {
 */
 _list_page.prototype.onpagebeforehide = function(event) {
 	console.log('list off matchHandler');
-	listenerApp.off('soundMatched', matchHandler);
+	listenerApp.off('soundMatched', listMatchHandler);
 };
 
