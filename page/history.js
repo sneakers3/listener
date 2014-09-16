@@ -7,15 +7,17 @@
  * Add new alert to history
  */
 function addNewAlert() {
-    
 }
 
 function historyMatchHandler( event, soundID ) {
     console.log( 'history matchHandler', soundID );
+    var sound = getSoundByID( soundID );
+    if ( sound.notiEnabled == false ) {
+        return;
+    }
+
     var currentDate = new Date;
-
     var history = getHistoryByID( soundID );
-
     if ( !history ) {
         // new history
         addNewHistory(soundID, currentDate);
@@ -32,11 +34,11 @@ function historyMatchHandler( event, soundID ) {
         }
     }
 
-    var sound = getSoundByID( soundID );
+    
     var noti = {
             id : sound.id,
             message : sound.title,
-            vibration : true // FIXME: sound..alertMethods[0], [1] check
+            vibration : true
     }
     notification(noti);
 
