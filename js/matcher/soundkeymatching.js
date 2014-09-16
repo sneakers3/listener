@@ -96,9 +96,15 @@ function SoundKeyMatching(options) {
 		matchingData.push({sample: sampleData, handler: matchingHandler, context: contextData});
 	}
 	
+	// 매칭 데이터를 초기화
+	this.resetMatch = function() {
+		matchingData = [];
+	}
+	
 	// volume level 검출
 	function getSampleFromData1(data, volume) {
 		var sample = {};
+		//sample.type = "sample";
 		sample.volume = volume;
 		return sample;
 	}
@@ -140,6 +146,7 @@ function SoundKeyMatching(options) {
 		} else {
 			sample.size = peakCount;
 			sample.volume = volume;
+			sample.type = "sample";
 		}
 		return sample;
 	}
@@ -215,6 +222,7 @@ function SoundKeyMatching(options) {
 		} else {
 			sample.size = peakValleyCount;
 			sample.volume = volume;
+			sample.type = "sample";
 		}
 		return sample;
 	}
@@ -266,7 +274,7 @@ function SoundKeyMatching(options) {
 			freqLevel = sample[i] - normalLevel;
 			
 			// 주변에서 제일 가까운 데이터와의 거리를 누적
-			i = parseInt(i);
+			i = parseInt(i, 10);
 			var dataSize = data.length;
 			var minFreq = i - opt.matchingFreqTolerance < 0 ? 0 : i - opt.matchingFreqTolerance;
 			var maxFreq = i + opt.matchingFreqTolerance + 1 > dataSize ? dataSize : i + opt.matchingFreqTolerance + 1;
@@ -292,7 +300,7 @@ function SoundKeyMatching(options) {
 // 설정 기본값을 반환
 SoundKeyMatching.createOptions = function() {
 	return {
-		samplingType: 3, /*
+		samplingType: 1, /*
 			1: volume level 검출 (테스트용)
 			2: peak 와 내리막 검출 (별로임)
 			3: 이동평균 peak 검출
