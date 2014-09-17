@@ -39,6 +39,7 @@ function historyMatchHandler( event, soundID ) {
             vibration : true // FIXME: sound..alertMethods[0], [1] check
     }
     notification(noti);
+    blink($('#content1')[0]);
 
     updateHistoryList();
 }

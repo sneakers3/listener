@@ -58,30 +58,12 @@ function updateSoundList() {
 	}
 }
 
-
 function getSoundItemFromID(soundID) {
-	return $('#soundListView li[sound-id=' + soundID +']');
+	return $('#soundListView li[sound-id=' + soundID +']')[0];
 }
 function listMatchHandler(event, soundID) {
-	console.log('list matchHandler', soundID);
-	
-	// set background of sound item and remove it after a period
-	var timer = listTimerMap[soundID];
-	if (timer) {
-//		console.log('clear timer for', soundID);
-		clearTimeout(timer);
-	}
-	var soundItem = getSoundItemFromID(soundID);
-//	console.log('soundItem', soundID, soundItem);
-	soundItem.css('background', 'red');
-	var handler = function () {
-//		console.log('Handler for ', soundID);
-		soundItem.css('background', '');
-		delete listTimerMap[soundID];
-	}
-	
-	var newTimer = setTimeout(handler, 2000);
-	listTimerMap[soundID] = newTimer;
+	console.log('list matchHandler', soundID);	
+	blink(getSoundItemFromID(soundID));
 }
 
 /**

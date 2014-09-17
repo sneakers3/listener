@@ -1,2 +1,12 @@
 body {
 }
+
+
+.blink {
+	-webkit-animation: myblink 1s;
+}
+
+@-webkit-keyframes myblink {
+	0%   {background-color: rgba(255, 0, 0, 1.0);}
+	100% {background-color: rgba(255, 0, 0, 0.0);}
+}

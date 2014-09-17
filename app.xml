@@ -19,6 +19,7 @@
             <library type="pages" param="all"/>
             <library type="entry" param="./tizen-ui-builder-fw/app-entry.js"/>
             <library type="entry" param="./app.js"/>
+            <library type="user" param="./js/ui-utils.js"/>
             <library type="user" param="./js/underscore-min.js"/>
             <library type="user" param="./js/listener.js"/>
             <library type="user" param="./js/matcher/soundkeymatching.js"/>
