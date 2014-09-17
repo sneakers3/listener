@@ -14,19 +14,16 @@
         </documentInfo>
         <documentData>
             <tizen.css>
-                <tizen.selector name="#label1" partId="label1">
-                    <tizen.style name="font-size" value="30px"/>
-                </tizen.selector>
                 <tizen.selector name="#divcontrol1" partId="divcontrol1">
-                    <tizen.style name="height" value="80px"/>
+                    <tizen.style name="height" value="40px"/>
                 </tizen.selector>
             </tizen.css>
             <tizen.doc>
                 <tizen.page id="intro" data-dom-cache="false" data-title="">
                     <tizen.content id="content1" data-handler="false">
-                        <html.label id="label1" text="마음의 소리"/>
-                        <html.divcontrol id="divcontrol1" style="overflow: hidden;" class=""/>
-                        <html.image id="introImage" src="../res/soundofheart.png" width="300" width-unit="px" height="370" height-unit="px" text-align="center" display="block" ontap="introImage_ontap"/>
+                        <html.divcontrol id="divcontrol1" style="overflow: hidden;" class="" ontap="divcontrol1_ontap"/>
+                        <html.image id="image1" src="../res/soundofheart.png" width="100" width-unit="%" height="100" height-unit="px" text-align="left" display="block"/>
+                        <html.image id="image2" src="../res/sneakers.jpg" width="100" width-unit="%" height="430" height-unit="px" text-align="left" display="block" ontap="image2_ontap"/>
                     </tizen.content>
                 </tizen.page>
             </tizen.doc>

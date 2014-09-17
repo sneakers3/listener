@@ -19,12 +19,13 @@ _intro_page.prototype = new _page("intro");
 
 // widget assist
 _intro_page.prototype.content1 = undefined;
-_intro_page.prototype.label1 = undefined;
 _intro_page.prototype.divcontrol1 = undefined;
-_intro_page.prototype.introImage = undefined;
+_intro_page.prototype.image1 = undefined;
+_intro_page.prototype.image2 = undefined;
 
 // default widget event handler
-_intro_page.prototype.introImage_ontap = function(event) {};
+_intro_page.prototype.divcontrol1_ontap = function(event) {};
+_intro_page.prototype.image2_ontap = function(event) {};
 
 _intro_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, managedCssPath) {
 	this.htmlPath = htmlPath;
@@ -42,20 +43,21 @@ _intro_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, manag
 		/**
 		 * @type jQueryObject
 		 */
-		_intro_page.prototype.label1 = $("#intro #label1");
-
-		/**
-		 * @type jQueryObject
-		 */
 		_intro_page.prototype.divcontrol1 = $("#intro #divcontrol1");
 
 		/**
 		 * @type jQueryObject
 		 */
-		_intro_page.prototype.introImage = $("#intro #introImage");
+		_intro_page.prototype.image1 = $("#intro #image1");
+
+		/**
+		 * @type jQueryObject
+		 */
+		_intro_page.prototype.image2 = $("#intro #image2");
 
 		// bind widget event handler
-		_intro_page.prototype.introImage.bind("tap", function(event) { _intro_page.prototype.introImage_ontap(event); });
+		_intro_page.prototype.divcontrol1.bind("tap", function(event) { _intro_page.prototype.divcontrol1_ontap(event); });
+		_intro_page.prototype.image2.bind("tap", function(event) { _intro_page.prototype.image2_ontap(event); });
 
 	}, isStartPage);
 

@@ -8,7 +8,7 @@
  * @base _intro_page
  * @returns {Boolean}
 */
-_intro_page.prototype.button1_ontap = function(event) {
+_intro_page.prototype.divcontrol1_ontap = function(event) {
 	pageManager.changePage('list', {transition: 'fade'});
 };
 
@@ -17,7 +17,7 @@ _intro_page.prototype.button1_ontap = function(event) {
  * @base _intro_page
  * @returns {Boolean}
 */
-_intro_page.prototype.introImage_ontap = function(event) {
+_intro_page.prototype.image2_ontap = function(event) {
 	pageManager.changePage('list', {transition: 'fade'});
 };
 
