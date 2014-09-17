@@ -20,6 +20,7 @@ _intro_page.prototype = new _page("intro");
 // widget assist
 _intro_page.prototype.content1 = undefined;
 _intro_page.prototype.label1 = undefined;
+_intro_page.prototype.divcontrol1 = undefined;
 _intro_page.prototype.introImage = undefined;
 
 // default widget event handler
@@ -41,6 +42,11 @@ _intro_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, manag
 		 * @type jQueryObject
 		 */
 		_intro_page.prototype.label1 = $("#intro #label1");
+
+		/**
+		 * @type jQueryObject
+		 */
+		_intro_page.prototype.divcontrol1 = $("#intro #divcontrol1");
 
 		/**
 		 * @type jQueryObject

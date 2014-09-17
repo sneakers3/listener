@@ -17,12 +17,16 @@
                 <tizen.selector name="#label1" partId="label1">
                     <tizen.style name="font-size" value="30px"/>
                 </tizen.selector>
+                <tizen.selector name="#divcontrol1" partId="divcontrol1">
+                    <tizen.style name="height" value="80px"/>
+                </tizen.selector>
             </tizen.css>
             <tizen.doc>
                 <tizen.page id="intro" data-dom-cache="false" data-title="" onpageshow="onpageshow">
                     <tizen.content id="content1" data-handler="false">
                         <html.label id="label1" text="Listener"/>
-                        <html.image id="introImage" src="../res/masami.jpg" width="240" width-unit="px" height="300" height-unit="px" text-align="center" display="block"/>
+                        <html.divcontrol id="divcontrol1" style="overflow: hidden;" class=""/>
+                        <html.image id="introImage" src="../res/soundofheart.png" width="300" width-unit="px" height="370" height-unit="px" text-align="center" display="block"/>
                     </tizen.content>
                 </tizen.page>
             </tizen.doc>
