@@ -23,8 +23,8 @@ function Matcher(options, audioReadyHandler) {
 			samplePackage.push(sample);
 		}
 		console.log("sample received #" + samplePackage.length);
-		samplingHandler(sample);
 		lastSample = sample;
+		samplingHandler(sample);
 	}
 	matching.setSamplingHandler(sampleReceived);
 	this.setSamplingHandler = function(handler) {

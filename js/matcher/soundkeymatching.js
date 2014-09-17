@@ -9,12 +9,15 @@ function SoundKeyMatching(options) {
 	var info = {
 		volumeLevel: 0,	// 현재 전체 볼륨 레벨
 		maxLevel: opt.minSamplingVolumeLevel,	// 최대 level
+		weightedLevel: 0,	// 볼륨 레벨에 정상/계곡 높이차이를 가산
+		maxWeightedLevel: 0,
 		sampleCount: 0,	// 샘플 추출 횟수
 	};
 	var maxLevelSampleData = null;	// 최대 level 일 때의 샘플링 데이터
 	
 	this.resetSampling = function () {
 		info.maxLevel = opt.minSamplingVolumeLevel;
+		info.maxWeightedLevel = info.maxLevel;
 		info.sampleCount = 0;
 	}
 	
@@ -23,12 +26,57 @@ function SoundKeyMatching(options) {
 	this.doSampling = function(data) {
 		// 볼륨 크기를 구해서
 		info.volumeLevel = 0;
+		info.weightedLevel = 0;
 		for (var i in data) {
 			info.volumeLevel += data[i];
 		}
-		if (info.volumeLevel > info.maxLevel) {
+		info.weightedLevel = info.volumeLevel;
+		
+		sampleData = samplingFunction(data, info.volumeLevel);
+		
+		// 정상과 계곡의 차이가 심할 수록 가중치를 둬서 샘플링되게 해준다.
+		var lastFreq = 0;
+		var lastLevel = 0;
+		var maxLevel = 0;
+		for (var i in sampleData) {
+			if (i === "size") break;
+			var freq = parseInt(i);
+			var level = sampleData[i];
+			var freqDistance = freq - lastFreq;
+			var levelDistance = Math.abs(lastLevel - level);
+			info.weightedLevel += parseInt((levelDistance * 100) / (freqDistance + 1));
+			
+			lastFreq = freq;
+			lastLevel = lastLevel;
+			
+			if (level > maxLevel) {
+				maxLevel = level;
+			}
+		}
+		sampleData.volume = info.weightedLevel;
+		
+		//if (info.volumeLevel > info.maxLevel) {
+		if (info.weightedLevel > info.maxWeightedLevel) {
 			info.maxLevel = info.volumeLevel;
-			maxLevelSampleData = samplingFunction(data, info.volumeLevel);
+			info.maxWeightedLevel = info.weightedLevel;
+
+			// high pass filter
+			var newSample = {};
+			var newSize = 0;
+			for (var i in sampleData) {
+				if (isNaN(parseInt(i))) {
+					newSample[i] = sampleData[i];
+				} else {
+					if (sampleData[i] > maxLevel * opt.highPassRatio) {
+						newSample[i] = sampleData[i];
+						newSize++;
+					}
+				}
+			}
+			newSample.size = newSize;
+			sampleData = newSample;
+			
+			maxLevelSampleData = sampleData; //samplingFunction(data, info.volumeLevel);
 			this.samplingHandler(maxLevelSampleData);
 			info.sampleCount++;
 		}
@@ -309,10 +357,10 @@ SoundKeyMatching.createOptions = function() {
 		matchingFreq: 5, // doMatching() 호출 주기 (초당 5회) - 매칭에 영향을 주지 않음. 호출 권장횟수를 의미
 		minSamplingVolumeLevel: 5000, // 전체 볼륨이 얼만큼 이상일 때 샘플을 추출하는가? (minMatchingVolumeLevel 보다 높은 값을 권장)
 		minMatchingVolumeLevel: 2000, // 전체 볼륨이 얼만큼 이상일 때 매칭을 시도하는가? (minSamplingVolumeLevel 보다 낮은 값을 권장)
-		// 내리막 따라가기
+		// 샘플링
 		minCheckLevel: 10,	// 주파수 대역별로 얼마의 level 이 되어야 정상으로 인식하는가?
 		peakEndingCheck: 10,	// 주파수 대역이 Max 이후로 몇 번 지나면 한 번의 봉우리가 완료된 것인가?
-		
+		highPassRatio: 0.1,	// 최정상을 기준으로 얼마 이하의 정상을 버릴 것인가??
 		// 일반
 		sampleEndingCheck: 5,	// level 이 Max 이후로 몇 번 지나면 한 번의 샘플링이 완료된 것인가?
 		matchingFreqTolerance: 3, // 정상/계곡 마다의 주파수 대역을 좌우로 어디까지 비교해 볼 것인가?
