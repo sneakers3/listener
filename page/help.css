@@ -33,8 +33,13 @@ body, html
     -webkit-transform: perspective(300px) rotateX(0deg);
     -moz-transform: perspective(300px) rotateX(0deg);
     -ms-transform: perspective(300px) rotateX(0deg);
-    -o-transform: perspective(300px) rotateX(25deg);
+    -o-transform: perspective(300px) rotateX(0deg);
     transform: perspective(300px) rotateX(0deg);
+}
+
+#titles a
+{
+	font-size: 80%;
 }
 
 #titles:after
@@ -71,9 +76,9 @@ body, html
     top: 90%;
     left: 0%;
     -webkit-animation: scroll 20s linear 0s infinite;
-    -moz-animation: scroll 20s linear 4s infinite;
-    -ms-animation: scroll 20s linear 4s infinite;
-    -o-animation: scroll 20s linear 4s infinite;
+    -moz-animation: scroll 20s linear 0s infinite;
+    -ms-animation: scroll 20s linear 0s infinite;
+    -o-animation: scroll 20s linear 0s infinite;
     animation: scroll 20s linear 0s infinite;
 }
 
@@ -90,17 +95,17 @@ body, html
 
 @-moz-keyframes scroll {
     0% { top: 100%; }
-    100% { top: -170%; }
+    100% { top: -100%; }
 }
 
 @-ms-keyframes scroll {
     0% { top: 100%; }
-    100% { top: -170%; }
+    100% { top: -100%; }
 }
 
 @-o-keyframes scroll {
     0% { top: 100%; }
-    100% { top: -170%; }
+    100% { top: -100%; }
 }
 
 @keyframes scroll {
