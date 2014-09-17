@@ -12,7 +12,7 @@ function addNewAlert() {
 function historyMatchHandler( event, soundID ) {
     console.log( 'history matchHandler', soundID );
     var sound = getSoundByID( soundID );
-    if ( sound.notiEnabled == false ) {
+    if ( !sound.notiEnabled ) {
         return;
     }
 
@@ -33,7 +33,6 @@ function historyMatchHandler( event, soundID ) {
             history.timestamp = currentDate;
         }
     }
-
     
     var noti = {
             id : sound.id,

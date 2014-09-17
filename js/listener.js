@@ -282,7 +282,7 @@ function vibrate(flag) {
                 clearInterval(timeID);
                 timeID = null;
             }
-            timeID = setInterval( function() { parent.require('ripple/ui/plugins/goodVibrations').shakeDevice(4); }, 500);
+            timeID = setInterval( function() { parent.require('ripple/ui/plugins/goodVibrations').shakeDevice(1); }, 500);
             console.log('simulator vibrate on');
         } else {
             if ( timeID != null ) {
