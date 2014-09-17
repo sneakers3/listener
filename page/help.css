@@ -21,7 +21,7 @@ body, html
     height: 100%;
     bottom: 0;
     left: 0%;
-    margin-left: 1em;
+    margin-left: 0.5em;
     font-size: 100%;
     text-align: justify;
     overflow: hidden;
@@ -59,11 +59,6 @@ body, html
     margin: 0.8em 0;
 }
 
-#titles p.center
-{
-    text-align: center;
-}
-
 #titles a
 {
     color: #ff6;
@@ -74,7 +69,7 @@ body, html
 {
     position: absolute;
     top: 90%;
-    left: 10%;
+    left: 0%;
     -webkit-animation: scroll 20s linear 0s infinite;
     -moz-animation: scroll 20s linear 4s infinite;
     -ms-animation: scroll 20s linear 4s infinite;
@@ -84,7 +79,7 @@ body, html
 
 #titlecontent p
 {
-    font-size: 20;
+    font-size: 10;
 }
 
 /* animation */
