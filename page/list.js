@@ -32,10 +32,10 @@ function updateSoundList() {
 	for (var i in listenerApp.sounds) {
 		var sound = listenerApp.sounds[i];
 		console.log('add sound:', sound);
-		
+		var showIcon = listenerApp.settings.showSoundIcons;
 		var li = $('<li class="ui-li-has-checkbox">' + 
 				'<input type="checkbox" name="onoff"/>' +
-				'<img src="../res/thumbnail.jpg" class="ui-li-bigicon">' +
+				(showIcon ? '<img src="../res/thumbnail.jpg" class="ui-li-bigicon">' : '') +
 				'<span class="ui-li-text-main"></span>' + 
 				'<select data-role="slider">' + 
 					'<option value="off"></option>' + 

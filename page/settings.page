@@ -15,15 +15,15 @@
         <documentData>
             <tizen.css/>
             <tizen.doc>
-                <tizen.page id="settings" data-dom-cache="false" data-title="">
+                <tizen.page id="settings" data-dom-cache="false" data-title="" onpageshow="onpageshow">
                     <tizen.header id="header1" text="Settings" text2="" data-position="fixed" icon-id="" src="">
                         <tizen.headerbutton id="backButton" text="Back" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide" ontap="backButton_ontap"/>
                     </tizen.header>
                     <tizen.content id="content1" data-handler="false">
                         <tizen.button id="helpButton" text="Help" data-style="" data-icon="" data-iconpos="left" data-inline="false" ontap="helpButton_ontap"/>
                         <tizen.checkboxes id="checkboxes1" text="">
-                            <tizen.checkboxitem id="checkboxitem1" text="Run on background" name="runOnBackground" value="" checked="checked" disabled="" class=""/>
-                            <tizen.checkboxitem id="checkboxitem2" text="Checkbox2" name="" value="" checked="" disabled="" class=""/>
+                            <tizen.checkboxitem id="runBackground" text="Run background" name="runOnBackground" value="" checked="checked" disabled="" class="" onchange="runBackground_onchange"/>
+                            <tizen.checkboxitem id="showSoundIcons" text="Show icon in sound list" name="showSoundIcons" value="" checked="checked" disabled="" class="" onchange="showSoundIcons_onchange"/>
                         </tizen.checkboxes>
                     </tizen.content>
                 </tizen.page>

@@ -36,8 +36,7 @@ function ListenerApp() {
     this.sounds = {}; // soundID -> Sound map
     this.currentState = 'stopped'; // 'stopped' | 'running'
     this.history = []; // Alert list
-    this.settings = {};
-    this.notiSettings = {}; // handles 'ignore 5mins' 
+    this.settings = {showSoundIcons: true};
 }
 
 jQuery.extend(ListenerApp.prototype, jQuery.eventEmitter);
@@ -51,6 +50,19 @@ function stop() {
 	console.log('stop');
 	listenerApp.currentState = 'stopped';
 }
+
+/**
+ * Change sound properties
+ */
+function changeSettings(settingsObject) {
+	var settings = listenerApp.settings;
+	console.log('settingsObject', settings, settingsObject);
+	settingsObject = _.pick(settingsObject, 'showSoundIcons', 'runBackground');
+	_.extend(settings, settingsObject);
+	saveApp();
+	return true;
+}
+
 
 /**
  * Sound model

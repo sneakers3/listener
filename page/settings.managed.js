@@ -23,12 +23,14 @@ _settings_page.prototype.backButton = undefined;
 _settings_page.prototype.content1 = undefined;
 _settings_page.prototype.helpButton = undefined;
 _settings_page.prototype.checkboxes1 = undefined;
-_settings_page.prototype.checkboxitem1 = undefined;
-_settings_page.prototype.checkboxitem2 = undefined;
+_settings_page.prototype.runBackground = undefined;
+_settings_page.prototype.showSoundIcons = undefined;
 
 // default widget event handler
 _settings_page.prototype.backButton_ontap = function(event) {};
 _settings_page.prototype.helpButton_ontap = function(event) {};
+_settings_page.prototype.runBackground_onchange = function(event) {};
+_settings_page.prototype.showSoundIcons_onchange = function(event) {};
 
 _settings_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, managedCssPath) {
 	this.htmlPath = htmlPath;
@@ -66,16 +68,18 @@ _settings_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, ma
 		/**
 		 * @type jQueryObject
 		 */
-		_settings_page.prototype.checkboxitem1 = $("#settings #checkboxitem1");
+		_settings_page.prototype.runBackground = $("#settings #runBackground");
 
 		/**
 		 * @type jQueryObject
 		 */
-		_settings_page.prototype.checkboxitem2 = $("#settings #checkboxitem2");
+		_settings_page.prototype.showSoundIcons = $("#settings #showSoundIcons");
 
 		// bind widget event handler
 		_settings_page.prototype.backButton.bind("tap", function(event) { _settings_page.prototype.backButton_ontap(event); });
 		_settings_page.prototype.helpButton.bind("tap", function(event) { _settings_page.prototype.helpButton_ontap(event); });
+		_settings_page.prototype.runBackground.bind("change", function(event) { _settings_page.prototype.runBackground_onchange(event); });
+		_settings_page.prototype.showSoundIcons.bind("change", function(event) { _settings_page.prototype.showSoundIcons_onchange(event); });
 
 	}, isStartPage);
 

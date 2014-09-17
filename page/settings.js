@@ -21,3 +21,31 @@ _settings_page.prototype.helpButton_ontap = function(event) {
 	pageManager.changePage('help');
 };
 
+/**
+ * @param {Object} event
+ * @base _settings_page
+ * @returns {Boolean}
+*/
+_settings_page.prototype.showSoundIcons_onchange = function(event) {
+	changeSettings({showSoundIcons: event.target.checked});
+};
+
+/**
+ * @param {Object} event
+ * @base _settings_page
+ * @returns {Boolean}
+*/
+_settings_page.prototype.onpageshow = function(event) {
+	$('#showSoundIcons').prop('checked', listenerApp.settings.showSoundIcons).checkboxradio('refresh');
+	$('#runBackground').prop('checked', listenerApp.settings.runBackground).checkboxradio('refresh');
+};
+
+/**
+ * @param {Object} event
+ * @base _settings_page
+ * @returns {Boolean}
+*/
+_settings_page.prototype.runBackground_onchange = function(event) {
+	changeSettings({runBackground: event.target.checked});
+};
+
