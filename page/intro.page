@@ -24,7 +24,7 @@
             <tizen.doc>
                 <tizen.page id="intro" data-dom-cache="false" data-title="" onpageshow="onpageshow">
                     <tizen.content id="content1" data-handler="false">
-                        <html.label id="label1" text="Listener"/>
+                        <html.label id="label1" text="Sound of Heart"/>
                         <html.divcontrol id="divcontrol1" style="overflow: hidden;" class=""/>
                         <html.image id="introImage" src="../res/soundofheart.png" width="300" width-unit="px" height="370" height-unit="px" text-align="center" display="block"/>
                     </tizen.content>
