@@ -24,6 +24,7 @@ _intro_page.prototype.divcontrol1 = undefined;
 _intro_page.prototype.introImage = undefined;
 
 // default widget event handler
+_intro_page.prototype.introImage_ontap = function(event) {};
 
 _intro_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, managedCssPath) {
 	this.htmlPath = htmlPath;
@@ -54,6 +55,7 @@ _intro_page.prototype.init_page = function(isStartPage, htmlPath, cssPath, manag
 		_intro_page.prototype.introImage = $("#intro #introImage");
 
 		// bind widget event handler
+		_intro_page.prototype.introImage.bind("tap", function(event) { _intro_page.prototype.introImage_ontap(event); });
 
 	}, isStartPage);
 

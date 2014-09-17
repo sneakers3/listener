@@ -9,6 +9,6 @@
  * @returns {Boolean}
 */
 _help_page.prototype.backButton_ontap = function(event) {
-	pageManager.changePage('settings');
+	pageManager.changePage('settings', {transition: 'fade'});
 };
 

@@ -22,11 +22,11 @@
                 </tizen.selector>
             </tizen.css>
             <tizen.doc>
-                <tizen.page id="intro" data-dom-cache="false" data-title="" onpageshow="onpageshow">
+                <tizen.page id="intro" data-dom-cache="false" data-title="">
                     <tizen.content id="content1" data-handler="false">
-                        <html.label id="label1" text="Sound of Heart"/>
+                        <html.label id="label1" text="마음의 소리"/>
                         <html.divcontrol id="divcontrol1" style="overflow: hidden;" class=""/>
-                        <html.image id="introImage" src="../res/soundofheart.png" width="300" width-unit="px" height="370" height-unit="px" text-align="center" display="block"/>
+                        <html.image id="introImage" src="../res/soundofheart.png" width="300" width-unit="px" height="370" height-unit="px" text-align="center" display="block" ontap="introImage_ontap"/>
                     </tizen.content>
                 </tizen.page>
             </tizen.doc>

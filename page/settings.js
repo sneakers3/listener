@@ -9,7 +9,7 @@
  * @returns {Boolean}
 */
 _settings_page.prototype.backButton_ontap = function(event) {
-	pageManager.changePage('list');
+	pageManager.changePage('list', {transition: 'fade'});
 };
 
 /**
@@ -18,7 +18,7 @@ _settings_page.prototype.backButton_ontap = function(event) {
  * @returns {Boolean}
 */
 _settings_page.prototype.helpButton_ontap = function(event) {
-	pageManager.changePage('help');
+	pageManager.changePage('help', {transition: 'fade'});
 };
 
 /**

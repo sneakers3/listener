@@ -72,7 +72,7 @@ function listMatchHandler(event, soundID) {
  * @returns {Boolean}
 */
 _list_page.prototype.startButton_ontap = function(event) {
-	pageManager.changePage('history', {});
+	pageManager.changePage('history', {transition: 'fade'});
 };
 
 /**
@@ -81,7 +81,7 @@ _list_page.prototype.startButton_ontap = function(event) {
  * @returns {Boolean}
 */
 _list_page.prototype.newSoundButton_ontap = function(event) {
-	pageManager.changePage('newsound', {});
+	pageManager.changePage('newsound', {transition: 'fade'});
 };
 
 /**
@@ -90,7 +90,7 @@ _list_page.prototype.newSoundButton_ontap = function(event) {
  * @returns {Boolean}
 */
 _list_page.prototype.settingsButton_ontap = function(event) {
-	pageManager.changePage('settings');
+	pageManager.changePage('settings', {transition: 'fade'});
 };
 
 /**

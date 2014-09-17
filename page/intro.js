@@ -9,7 +9,7 @@
  * @returns {Boolean}
 */
 _intro_page.prototype.button1_ontap = function(event) {
-	pageManager.changePage('list');
+	pageManager.changePage('list', {transition: 'fade'});
 };
 
 /**
@@ -17,11 +17,7 @@ _intro_page.prototype.button1_ontap = function(event) {
  * @base _intro_page
  * @returns {Boolean}
 */
-_intro_page.prototype.onpageshow = function(event) {
-	console.log('intro page show');
-	setTimeout(function () {
-		console.log('go to list');
-		pageManager.changePage('list');
-	}, 1000);
+_intro_page.prototype.introImage_ontap = function(event) {
+	pageManager.changePage('list', {transition: 'fade'});
 };
 
