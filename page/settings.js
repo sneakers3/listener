@@ -35,9 +35,8 @@ _settings_page.prototype.showSoundIcons_onchange = function(event) {
  * @base _settings_page
  * @returns {Boolean}
 */
-_settings_page.prototype.onpageshow = function(event) {
-	$('#showSoundIcons').prop('checked', listenerApp.settings.showSoundIcons).checkboxradio('refresh');
-	$('#runBackground').prop('checked', listenerApp.settings.runBackground).checkboxradio('refresh');
+_settings_page.prototype.runBackground_onchange = function(event) {
+	changeSettings({runBackground: event.target.checked});
 };
 
 /**
@@ -45,7 +44,9 @@ _settings_page.prototype.onpageshow = function(event) {
  * @base _settings_page
  * @returns {Boolean}
 */
-_settings_page.prototype.runBackground_onchange = function(event) {
-	changeSettings({runBackground: event.target.checked});
+_settings_page.prototype.onpageinit = function(event) {
+	$('#showSoundIcons').prop('checked', listenerApp.settings.showSoundIcons).checkboxradio('refresh');
+	$('#runBackground').prop('checked', listenerApp.settings.runBackground).checkboxradio('refresh');
+
 };
 

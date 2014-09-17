@@ -15,7 +15,7 @@
         <documentData>
             <tizen.css/>
             <tizen.doc>
-                <tizen.page id="settings" data-dom-cache="false" data-title="" onpageshow="onpageshow">
+                <tizen.page id="settings" data-dom-cache="false" data-title="" onpageinit="onpageinit">
                     <tizen.header id="header1" text="Settings" text2="" data-position="fixed" icon-id="" src="">
                         <tizen.headerbutton id="backButton" text="Back" href="" data-direction="" data-dom-cache="false" data-prefetch="" data-transition="slide" ontap="backButton_ontap"/>
                     </tizen.header>
