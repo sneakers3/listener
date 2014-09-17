@@ -98,6 +98,7 @@ _history_page.prototype.onpagebeforeshow = function(event) {
  * @returns {Boolean}
 */
 _history_page.prototype.backButton_ontap = function(event) {
+    vibrate(false);
     pageManager.changePage('list', {transition: 'fade'});
 };
 

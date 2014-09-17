@@ -1,27 +1,27 @@
 var listenerApp;
 
 (function(jQuery) {
-	jQuery.eventEmitter = {
-			_JQInit: function() {
-				this._JQ = jQuery(this);
-			},
-			emit: function(evt, data) {
-				!this._JQ && this._JQInit();
-				this._JQ.trigger(evt, data);
-			},
-			once: function(evt, handler) {
-				!this._JQ && this._JQInit();
-				this._JQ.one(evt, handler);
-			},
-			on: function(evt, handler) {
-				!this._JQ && this._JQInit();
-				this._JQ.bind(evt, handler);
-			},
-			off: function(evt, handler) {
-				!this._JQ && this._JQInit();
-				this._JQ.unbind(evt, handler);
-			}
-	};
+    jQuery.eventEmitter = {
+            _JQInit: function() {
+                this._JQ = jQuery(this);
+            },
+            emit: function(evt, data) {
+                !this._JQ && this._JQInit();
+                this._JQ.trigger(evt, data);
+            },
+            once: function(evt, handler) {
+                !this._JQ && this._JQInit();
+                this._JQ.one(evt, handler);
+            },
+            on: function(evt, handler) {
+                !this._JQ && this._JQInit();
+                this._JQ.bind(evt, handler);
+            },
+            off: function(evt, handler) {
+                !this._JQ && this._JQInit();
+                this._JQ.unbind(evt, handler);
+            }
+    };
 }(jQuery));
 
 /**
@@ -42,27 +42,26 @@ function ListenerApp() {
 jQuery.extend(ListenerApp.prototype, jQuery.eventEmitter);
 
 function start() {
-	console.log('start');
-	listenerApp.currentState = 'running';
+    console.log('start');
+    listenerApp.currentState = 'running';
 }
 
 function stop() {
-	console.log('stop');
-	listenerApp.currentState = 'stopped';
+    console.log('stop');
+    listenerApp.currentState = 'stopped';
 }
 
 /**
  * Change sound properties
  */
 function changeSettings(settingsObject) {
-	var settings = listenerApp.settings;
-	console.log('settingsObject', settings, settingsObject);
-	settingsObject = _.pick(settingsObject, 'showSoundIcons', 'runBackground');
-	_.extend(settings, settingsObject);
-	saveApp();
-	return true;
+    var settings = listenerApp.settings;
+    console.log('settingsObject', settings, settingsObject);
+    settingsObject = _.pick(settingsObject, 'showSoundIcons', 'runBackground');
+    _.extend(settings, settingsObject);
+    saveApp();
+    return true;
 }
-
 
 /**
  * Sound model
@@ -111,45 +110,45 @@ function addNewSound(title, soundData, samplePackage) {
 }
 
 function getSoundByID(soundID) {
-	for (var i in listenerApp.sounds) {
-		var sound = listenerApp.sounds[i];
-		if (sound.id == soundID) {
-			return sound;
-		}
-	}
-	return null;
+    for (var i in listenerApp.sounds) {
+        var sound = listenerApp.sounds[i];
+        if (sound.id == soundID) {
+            return sound;
+        }
+    }
+    return null;
 }
 
 /**
  * Change sound properties
  */
 function changeSound(soundID, soundObject) {
-	var sound = getSoundByID(soundID);
-	console.log('changeSound', sound, soundObject);
-	if (!sound) {
-		console.error('changeSound soundID not found:', soundID);
-		return false;
-	}
-	soundObject = _.pick(soundObject, 'title', 'soundData', 'samplePackage', 'enabled', 'alertMethods', 'notiEnabled');
-	_.extend(sound, soundObject);
-	saveApp();
-	return true;
+    var sound = getSoundByID(soundID);
+    console.log('changeSound', sound, soundObject);
+    if (!sound) {
+        console.error('changeSound soundID not found:', soundID);
+        return false;
+    }
+    soundObject = _.pick(soundObject, 'title', 'soundData', 'samplePackage', 'enabled', 'alertMethods', 'notiEnabled');
+    _.extend(sound, soundObject);
+    saveApp();
+    return true;
 }
 
 /**
  * Delete sound
  */
 function deleteSound(soundID) {
-	for (var i in listenerApp.sounds ) {
-		var sound = listenerApp.sounds[i];
-		if (sound.id == soundID) {
-			delete listenerApp.sounds[i];
-			saveApp();
-			return true;
-		}
-	}
-	console.error('changeSound soundID not found:', soundID);
-	return false;
+    for (var i in listenerApp.sounds ) {
+        var sound = listenerApp.sounds[i];
+        if (sound.id == soundID) {
+            delete listenerApp.sounds[i];
+            saveApp();
+            return true;
+        }
+    }
+    console.error('changeSound soundID not found:', soundID);
+    return false;
 }
 
 /**
@@ -195,20 +194,21 @@ app.onload = function () {
 };
 
 function startMatching() {
-	var onSounds = _.filter(listenerApp.sounds, function (sound) { return sound.enabled; });
-	var soundArray = _.toArray(onSounds);
-	var samplePackages = _.pluck(soundArray, 'samplePackage');
-	console.log('samplePackages', samplePackages);
-	console.log("startMatching(packages, sampleMatched); length", samplePackages.length);
-	matcher.startMatching(samplePackages, function (sampleIndex) {
-		var sound = soundArray[sampleIndex];
-		console.log("sample matched index:", sampleIndex, ", sound:", sound.id, sound.title);
-		listenerApp.emit('soundMatched', sound.id);
-	});
+    var onSounds = _.filter(listenerApp.sounds, function (sound) { return sound.enabled; });
+    var soundArray = _.toArray(onSounds);
+    var samplePackages = _.pluck(soundArray, 'samplePackage');
+    console.log('samplePackages', samplePackages);
+    console.log("startMatching(packages, sampleMatched); length", samplePackages.length);
+    matcher.startMatching(samplePackages, function (sampleIndex) {
+        var sound = soundArray[sampleIndex];
+        console.log("sample matched index:", sampleIndex, ", sound:", sound.id, sound.title);
+        listenerApp.emit('soundMatched', sound.id);
+    });
 }
+
 function stopMatching() {
-	console.log("stopMatching();");
-	matcher.stopMatching();
+    console.log("stopMatching();");
+    matcher.stopMatching();
 }
 
 /**
@@ -312,7 +312,7 @@ function vibrate(flag) {
 var flashID = null;
 function flash(flag) {
     if ( isDevice() == true ) {
-        // TODO
+        // Nothing
     } else {
          if ( flag == true ) {
              if ( flashID != null ) {
@@ -361,21 +361,21 @@ function Alert(soundID, timestamp) {
 }
 
 function History(soundID, timestamp) {
-	this.soundID = soundID;
+    this.soundID = soundID;
     this.timestamp = timestamp;
 }
 
 function addNewHistory(soundID, timestamp) {
-	var newHistory = new History(soundID, timestamp);
+    var newHistory = new History(soundID, timestamp);
     listenerApp.history.push(newHistory);
 }
 
 function getHistoryByID(soundID) {
-	for (var i in listenerApp.history ) {
-		var history = listenerApp.history[i];
-		if (history.soundID == soundID) {
-			return history;
-		}
-	}
-	return null;
+    for (var i in listenerApp.history ) {
+        var history = listenerApp.history[i];
+        if (history.soundID == soundID) {
+            return history;
+        }
+    }
+    return null;
 }
