@@ -73,12 +73,13 @@ body, html
 #titlecontent
 {
     position: absolute;
-    top: 100%;
-    -webkit-animation: scroll 50s linear 4s infinite;
-    -moz-animation: scroll 50s linear 4s infinite;
-    -ms-animation: scroll 50s linear 4s infinite;
-    -o-animation: scroll 50s linear 4s infinite;
-    animation: scroll 50s linear 4s infinite;
+    top: 90%;
+    left: 10%;
+    -webkit-animation: scroll 20s linear 0s infinite;
+    -moz-animation: scroll 20s linear 4s infinite;
+    -ms-animation: scroll 20s linear 4s infinite;
+    -o-animation: scroll 20s linear 4s infinite;
+    animation: scroll 20s linear 0s infinite;
 }
 
 #titlecontent p
@@ -88,8 +89,8 @@ body, html
 
 /* animation */
 @-webkit-keyframes scroll {
-    0% { top: 100%; }
-    100% { top: -170%; }
+    0% { top: 90%; }
+    100% { top: -100%; }
 }
 
 @-moz-keyframes scroll {
@@ -108,6 +109,6 @@ body, html
 }
 
 @keyframes scroll {
-    0% { top: 100%; }
-    100% { top: -170%; }
+    0% { top: 90%; }
+    100% { top: -100%; }
 }
